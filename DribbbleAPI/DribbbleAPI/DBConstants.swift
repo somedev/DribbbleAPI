@@ -8,12 +8,11 @@
 
 import Foundation
 
-internal let DBRedirectUri = "dribbble-api://callback"
 internal let DBEmptyPageHTML = "<html><body bgcolor=\"#333333\"></body></html>"
 
 //MARK: - API
-internal let DBAPIEndpoint = URL(string: "https://api.dribbble.com/v1")!
-internal let DBAPIOAuthEndpoint = URL(string: "https://dribbble.com/oauth")!
+internal let DBAPIEndpoint = "https://api.dribbble.com/v1/"
+internal let DBAPIOAuthEndpoint = "https://dribbble.com/oauth/"
 
 internal let DBAPITokenPath = "token"
 internal let DBAPIAuthorizePath = "authorize"

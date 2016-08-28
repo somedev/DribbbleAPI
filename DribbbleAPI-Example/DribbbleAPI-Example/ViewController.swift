@@ -7,19 +7,26 @@
 //
 
 import UIKit
+import DribbbleAPI
 
 class ViewController: UIViewController {
 
+    let manager = DBLoginManager(clientID: "efb0eafb4713dd79409d3448771adb52d1678aae2f5df6a8320c4e4fa250fb82",
+                                 clientSecret: "31a6e66309707fe6c5ef57f9de68a1aab1341bea9802e4edf057215e1c2f4a30",
+                                 callbackURL: URL(string:"dribbbleapi://phone-callback")!)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    //MARK: - actions
+    @IBAction func login(_ sender: AnyObject) {
+        manager.login(from: self, callback: {result in
+            print("login result: \(result)")
+        })
     }
-
+    
 
 }
 

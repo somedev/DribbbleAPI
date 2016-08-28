@@ -13,7 +13,7 @@ class DBScopeTests: XCTestCase {
     
     func testScopeString() {
         let scopes:[DBScope] = [.Public, .comment, .upload, .write]
-        XCTAssertEqual(DBScope.scopeString(from: scopes), "public comment upload write")
+        XCTAssertEqual(DBScope.scopeString(from: scopes), "public+comment+upload+write")
     }
     
 }

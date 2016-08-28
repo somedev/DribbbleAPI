@@ -15,6 +15,8 @@ public enum DBScope:String {
     case upload
     
     static func scopeString(from scopes:[DBScope]) -> String {
-        return scopes.reduce("", {"\($0) \($1.rawValue)"}).trimmingCharacters(in: CharacterSet.whitespaces)
+        var result = scopes.reduce("", {"\($0)+\($1.rawValue)"})
+        result.characters.removeFirst(1)
+        return result
     }
 }
