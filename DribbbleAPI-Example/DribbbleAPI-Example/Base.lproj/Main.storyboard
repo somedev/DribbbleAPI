@@ -27,7 +27,7 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="rmW-rD-7D2" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Bh9-PF-i3c"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="rmW-rD-7D2" secondAttribute="bottom" constant="40" id="MTx-oF-F7A"/>
                             <constraint firstItem="rmW-rD-7D2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wz4-kL-lED"/>
                         </constraints>
                     </view>
