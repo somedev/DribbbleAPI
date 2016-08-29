@@ -32,7 +32,7 @@ public final class DBLoginManager {
             let controller = DBLoginViewController(callback: manager.controllerCallback(callback:callback),
                                                    loadURL: manager.makeAuthorizeURL(),
                                                    callbackURL: manager.callbackURL)
-            let navigation = UINavigationController(rootViewController: controller)
+            let navigation = DBNavigationViewController(rootViewController: controller)
             viewController.present(navigation, animated: true, completion: nil)
         }
         clearCookies(job)

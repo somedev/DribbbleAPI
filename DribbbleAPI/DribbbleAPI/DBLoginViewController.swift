@@ -85,6 +85,8 @@ public final class DBLoginViewController: UIViewController, WKNavigationDelegate
     }
     
     private func proceedWith(code aCode:String) {
-        self.callback?(aCode, true)
+        dismiss(animated: true) {
+            self.callback?(aCode, true)
+        }
     }
 }
