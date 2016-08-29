@@ -14,11 +14,12 @@ public typealias DBLoginCallback = ((Bool)->())
 
 public final class DBLoginManager {
     
+    private let tokenStorage = DBTokenStorage()
     private let clientID:String
     private let clientSecret:String
     private let scopes:[DBScope]
     private let callbackURL:URL
-    
+
     public init(clientID:String, clientSecret:String, callbackURL:URL, scopes:[DBScope] = [.Public]) {
         self.clientID = clientID
         self.clientSecret = clientSecret
@@ -35,7 +36,18 @@ public final class DBLoginManager {
             let navigation = DBNavigationViewController(rootViewController: controller)
             viewController.present(navigation, animated: true, completion: nil)
         }
-        clearCookies(job)
+        logout(callback: job)
+    }
+    
+    public func logout(callback:DBCallback?) {
+        let keychainJob:DBCallback = { [weak self] in
+            self?.clearKeychain(callback)
+        }
+        clearCookies(keychainJob)
+    }
+    
+    public func isLoggedIn() -> Bool {
+        return tokenStorage.getToken() != nil
     }
     
     //MARK: - private
@@ -54,16 +66,16 @@ public final class DBLoginManager {
         request.httpMethod = "POST"
         request.httpBody = "client_id=\(clientID)&client_secret=\(clientSecret)&code=\(aCode)".data(using: .utf8)
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
+        URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
             guard error == nil,
                 let data = data,
-                let json = (try? JSONSerialization.jsonObject(with: data)) as? Dictionary<String, Any>
+                let json = (try? JSONSerialization.jsonObject(with: data)) as? Dictionary<String, Any>,
+                let token = json["access_token"] as? String
                 else {
                     callback(false)
                     return
             }
-            
-            print("access token: \(json["access_token"]))")
+            self?.tokenStorage.setToken(value: token)
             callback(true)
         }.resume()
     }
@@ -73,13 +85,18 @@ public final class DBLoginManager {
         return URL(string: path)
     }
     
-    private func clearCookies(_ callback:DBCallback) {
+    private func clearKeychain(_ callback:DBCallback?) {
+        tokenStorage.deleteToken()
+        callback?()
+    }
+    
+    private func clearCookies(_ callback:DBCallback?) {
         let store = WKWebsiteDataStore.default()
         store.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
             let filtered = records.filter({$0.displayName.contains("dribbble")})
             WKWebsiteDataStore.default().removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
                                                     for: filtered,
-                                                    completionHandler: callback)
+                                                    completionHandler: callback ?? {_ in })
         }
     }
     

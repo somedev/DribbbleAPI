@@ -39,6 +39,7 @@
 		64109C7D1D6CCC0300B0242E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		64109C7F1D6CCC0300B0242E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		64109C8F1D6CD0D800B0242E /* DribbbleAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DribbbleAPI.framework; path = ../build/DribbbleAPI.framework; sourceTree = "<group>"; };
+		649A61E11D74A593003ADABE /* DribbbleAPI-Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "DribbbleAPI-Example.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +74,7 @@
 		64109C721D6CCC0300B0242E /* DribbbleAPI-Example */ = {
 			isa = PBXGroup;
 			children = (
+				649A61E11D74A593003ADABE /* DribbbleAPI-Example.entitlements */,
 				64109C731D6CCC0300B0242E /* AppDelegate.swift */,
 				64109C751D6CCC0300B0242E /* ViewController.swift */,
 				64109C771D6CCC0300B0242E /* Main.storyboard */,
@@ -118,6 +120,11 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = YX85UGB2WF;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -279,6 +286,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "DribbbleAPI-Example/DribbbleAPI-Example.entitlements";
 				DEVELOPMENT_TEAM = YX85UGB2WF;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -297,6 +305,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "DribbbleAPI-Example/DribbbleAPI-Example.entitlements";
 				DEVELOPMENT_TEAM = YX85UGB2WF;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -330,6 +339,7 @@
 				64109C841D6CCC0300B0242E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
