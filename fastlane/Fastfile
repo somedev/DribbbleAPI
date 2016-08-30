@@ -1,0 +1,13 @@
+
+fastlane_version "1.102.0"
+
+PROJECT_WORKSPACE = "DribbleAPI.xcworkspace"
+
+
+desc "Runs all the tests"
+lane :test do
+  scan(
+    scheme: "DribbbleAPITests",
+    devices: ["iPhone 6s"]
+    )
+end
