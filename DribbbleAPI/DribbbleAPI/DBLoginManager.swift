@@ -14,6 +14,7 @@ public typealias DBLoginCallback = ((Bool)->())
 
 public final class DBLoginManager {
     
+    private let sender = RequestSender(baseURL: URL(string:DBAPIOAuthEndpoint)!)
     private let tokenStorage = DBTokenStorage()
     private let clientID:String
     private let clientSecret:String
@@ -62,22 +63,16 @@ public final class DBLoginManager {
     }
     
     private func getAccessTokenFrom(code aCode:String, callback:DBLoginCallback) {
-        var request = URLRequest(url: URL(string:DBAPIOAuthEndpoint + DBAPITokenPath)!)
-        request.httpMethod = "POST"
-        request.httpBody = "client_id=\(clientID)&client_secret=\(clientSecret)&code=\(aCode)".data(using: .utf8)
-        
-        URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
-            guard error == nil,
-                let data = data,
-                let json = (try? JSONSerialization.jsonObject(with: data)) as? Dictionary<String, Any>,
-                let token = json["access_token"] as? String
-                else {
-                    callback(false)
-                    return
+        sender.send(request: accessTokenRequestFrom(code: aCode)) {[weak self] result in
+            switch result {
+            case .Success(let token):
+                self?.tokenStorage.setToken(value: token)
+                callback(true)
+            case .Failure(let error):
+                print("access token fetch error: \(error)")
+                callback(false)
             }
-            self?.tokenStorage.setToken(value: token)
-            callback(true)
-        }.resume()
+        }
     }
     
     private func makeAuthorizeURL() -> URL? {
@@ -88,6 +83,16 @@ public final class DBLoginManager {
     private func clearKeychain(_ callback:DBCallback?) {
         tokenStorage.deleteToken()
         callback?()
+    }
+    
+    private func accessTokenRequestFrom(code aCode:String) -> Request<String>{
+        return Request(type: .POST,
+                       path: DBAPITokenPath,
+                       headers: [:],
+                       params: ["client_id":clientID, "client_secret":clientSecret, "code":aCode],
+                       parser: {data in
+                        return data["access_token"] as? String
+        })
     }
     
     private func clearCookies(_ callback:DBCallback?) {
