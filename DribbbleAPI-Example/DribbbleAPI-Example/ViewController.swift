@@ -10,7 +10,7 @@ import UIKit
 import DribbbleAPI
 
 class ViewController: UIViewController {
-
+    
     @IBOutlet weak var button: UIButton!
     
     let manager = DBLoginManager(clientID: "efb0eafb4713dd79409d3448771adb52d1678aae2f5df6a8320c4e4fa250fb82",
@@ -22,24 +22,33 @@ class ViewController: UIViewController {
         UINavigationBar.appearance(whenContainedInInstancesOf: [DBNavigationViewController.self]).tintColor = UIColor.white
         UINavigationBar.appearance(whenContainedInInstancesOf: [DBNavigationViewController.self]).barTintColor = UIColor(colorLiteralRed: 0.2, green: 0.2, blue: 0.2, alpha: 1)
         UINavigationBar.appearance(whenContainedInInstancesOf: [DBNavigationViewController.self]).isTranslucent = false
-
+        
         updateButton(manager.isLoggedIn())
     }
-
+    
     //MARK: - actions
     @IBAction func login(_ sender: AnyObject) {
         if manager.isLoggedIn() {
             manager.logout(callback: {[weak self] result in
                 print("logout result: \(result)")
                 self?.updateButton(false)
-
-            })
+                
+                })
             return
         }
         manager.login(from: self, callback: {[weak self] result in
             self?.updateButton(true)
             print("login result: \(result)")
-        })
+            //load current user
+            RequestSender.defaultSender.send(request: DBUser.currentUserRequest, callback: { r in
+                switch r {
+                case .Success(let user):
+                    print("user: \(user)")
+                case .Failure(let error):
+                    print("error: \(error)")
+                }
+            })
+            })
     }
     
     //MARK: - private
@@ -48,6 +57,6 @@ class ViewController: UIViewController {
         button.setTitle(title, for: .normal)
     }
     
-
+    
 }
 

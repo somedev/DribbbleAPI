@@ -15,8 +15,13 @@ enum RequestSenderError:Error {
 }
 
 public final class RequestSender {
-    let baseURL:URL
-    let urlSession: URLSession = URLSession.shared
+    
+    public static let defaultSender:RequestSender = {
+        return RequestSender(baseURL: URL(string:DBAPIEndpoint)!)
+    }()
+    
+    private let baseURL:URL
+    private let urlSession: URLSession = URLSession.shared
     
     
     public init(baseURL url:URL) {
