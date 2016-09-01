@@ -19,11 +19,11 @@ public enum RequestType:String {
 public typealias RequestParser<T> = ((Dictionary<String, Any>) -> T?)
 
 public struct Request<T> {
-    let type:RequestType
-    let path:String
-    let headers:[String:String]
-    let params:[String:String]
-    let parser:RequestParser<T>
+    public let type:RequestType
+    public let path:String
+    public let headers:[String:String]
+    public let params:[String:String]
+    public let parser:RequestParser<T>
     
     public init(type:RequestType = .GET,
                 path:String,
@@ -40,7 +40,10 @@ public struct Request<T> {
 
 public extension Request {
     public static var defaultHeaders:[String:String] {
-        return ["Authorization":"Bearer \(DBTokenStorage().getToken())"]
+        guard let token = DBTokenStorage().getToken() else {
+            return [:]
+        }
+        return ["Authorization":"Bearer \(token)"]
     }
     
     public func requestWith(baseURL anUrl:URL) -> URLRequest {

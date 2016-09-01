@@ -25,6 +25,8 @@
 		649A61E01D74A315003ADABE /* DBTokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649A61DF1D74A315003ADABE /* DBTokenStorage.swift */; };
 		649A61E31D74A716003ADABE /* DBKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649A61E21D74A716003ADABE /* DBKeychain.swift */; };
 		649A61E51D74B3DE003ADABE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649A61E41D74B3DE003ADABE /* Security.framework */; };
+		64B788BA1D789DC6008C525A /* DBUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B788B91D789DC6008C525A /* DBUser.swift */; };
+		64B788C01D78A68A008C525A /* Dictionary+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B788BF1D78A68A008C525A /* Dictionary+JSON.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,8 @@
 		649A61DF1D74A315003ADABE /* DBTokenStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBTokenStorage.swift; sourceTree = "<group>"; };
 		649A61E21D74A716003ADABE /* DBKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBKeychain.swift; sourceTree = "<group>"; };
 		649A61E41D74B3DE003ADABE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		64B788B91D789DC6008C525A /* DBUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBUser.swift; sourceTree = "<group>"; };
+		64B788BF1D78A68A008C525A /* Dictionary+JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+JSON.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +111,8 @@
 		64109C2B1D6CCB9000B0242E /* DribbbleAPI */ = {
 			isa = PBXGroup;
 			children = (
+				64B788BB1D78A2FA008C525A /* JSON */,
+				64B788B81D789D9D008C525A /* Models */,
 				6486607E1D76154300BCB455 /* Extensions */,
 				648660771D760DDF00BCB455 /* Network */,
 				64109C2C1D6CCB9000B0242E /* DribbbleAPI.h */,
@@ -157,8 +163,24 @@
 			isa = PBXGroup;
 			children = (
 				6486607F1D76157E00BCB455 /* String+Utils.swift */,
+				64B788BF1D78A68A008C525A /* Dictionary+JSON.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		64B788B81D789D9D008C525A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				64B788B91D789DC6008C525A /* DBUser.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		64B788BB1D78A2FA008C525A /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = JSON;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -292,10 +314,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64B788BA1D789DC6008C525A /* DBUser.swift in Sources */,
 				648660801D76157E00BCB455 /* String+Utils.swift in Sources */,
 				64109CA01D6CDF2C00B0242E /* DBScope.swift in Sources */,
 				648660791D760E0E00BCB455 /* Request.swift in Sources */,
 				649A61E01D74A315003ADABE /* DBTokenStorage.swift in Sources */,
+				64B788C01D78A68A008C525A /* Dictionary+JSON.swift in Sources */,
 				64109C9A1D6CD2FB00B0242E /* DBLoginViewController.swift in Sources */,
 				64109C981D6CD28100B0242E /* DBLoginManager.swift in Sources */,
 				6486607B1D760E3000BCB455 /* RequestSender.swift in Sources */,
