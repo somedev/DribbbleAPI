@@ -11,17 +11,23 @@ import Foundation
 internal final class DBTokenStorage {
     
     private let keychain:DBKeychain = DBKeychain()
-
+    private var tokenKey:String = DBTokenParameterName
     
-    public func getToken(name aName:String = DBTokenParameterName) -> String? {
-        return keychain.getString(forKey: aName)
+    public static var shared:DBTokenStorage = DBTokenStorage()
+    
+    public func setup(client aClient:String, secret:String) {
+        tokenKey = "\(aClient)\(secret)\(DBTokenParameterName)"
     }
     
-    public func setToken(name aName:String = DBTokenParameterName, value:String)  {
-        keychain.set(string: value, forKey: aName)
+    public func getToken() -> String? {
+        return keychain.getString(forKey: tokenKey)
     }
     
-    public func deleteToken(name aName:String = DBTokenParameterName) {
-        keychain.delete(forKey: aName)
+    public func setToken(token value:String)  {
+        keychain.set(string: value, forKey: tokenKey)
+    }
+    
+    public func deleteToken() {
+        keychain.delete(forKey: tokenKey)
     }
 }

@@ -15,7 +15,6 @@ public typealias DBLoginCallback = ((Bool)->())
 public final class DBLoginManager {
     
     private let sender = RequestSender(baseURL: URL(string:DBAPIOAuthEndpoint)!)
-    private let tokenStorage = DBTokenStorage()
     private let clientID:String
     private let clientSecret:String
     private let scopes:[DBScope]
@@ -26,6 +25,7 @@ public final class DBLoginManager {
         self.clientSecret = clientSecret
         self.scopes = scopes
         self.callbackURL = callbackURL
+        DBTokenStorage.shared.setup(client: clientID, secret: clientSecret)
     }
     
     public func login(from viewController:UIViewController, callback:DBLoginCallback) {
@@ -48,7 +48,7 @@ public final class DBLoginManager {
     }
     
     public func isLoggedIn() -> Bool {
-        return tokenStorage.getToken() != nil
+        return DBTokenStorage.shared.getToken() != nil
     }
     
     //MARK: - private
@@ -66,7 +66,7 @@ public final class DBLoginManager {
         sender.send(request: accessTokenRequestFrom(code: aCode)) {[weak self] result in
             switch result {
             case .Success(let token):
-                self?.tokenStorage.setToken(value: token)
+                DBTokenStorage.shared.setToken(token: token)
                 callback(true)
             case .Failure(let error):
                 print("access token fetch error: \(error)")
@@ -81,7 +81,7 @@ public final class DBLoginManager {
     }
     
     private func clearKeychain(_ callback:DBCallback?) {
-        tokenStorage.deleteToken()
+        DBTokenStorage.shared.deleteToken()
         callback?()
     }
     
