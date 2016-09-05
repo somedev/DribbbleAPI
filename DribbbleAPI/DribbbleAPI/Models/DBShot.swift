@@ -59,7 +59,7 @@ extension DBShot {
 }
 
 extension DBShot {
-    public static func currentUserShots(page p:UInt = 1, perPage:UInt = 100) -> Request<[DBShot]> {
+    public static func currentUserShots(page p:UInt = 0, perPage:UInt = 100) -> Request<[DBShot]> {
         return Request(path: "user/shots",
                        headers: Request<DBShot>.defaultHeaders,
                        parser: { data in
@@ -68,7 +68,7 @@ extension DBShot {
         })
     }
     
-    public static func popularShots(page p:UInt = 1, perPage:UInt = 100) -> Request<[DBShot]> {
+    public static func popularShots(page p:UInt = 0, perPage:UInt = 100) -> Request<[DBShot]> {
         return Request(path: "shots",
                        headers: Request<DBShot>.defaultHeaders,
                        parser: { data in

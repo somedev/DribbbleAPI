@@ -40,7 +40,7 @@ public struct Request<T> {
 
 public extension Request {
     public static var defaultHeaders:[String:String] {
-        guard let token = DBTokenStorage().getToken() else {
+        guard let token = DBTokenStorage.shared.getToken() else {
             return [:]
         }
         return ["Authorization":"Bearer \(token)"]

@@ -13,6 +13,8 @@ internal final class DBTokenStorage {
     private let keychain:DBKeychain = DBKeychain()
     private var tokenKey:String = DBTokenParameterName
     
+    private var tokenCache:String?
+    
     public static var shared:DBTokenStorage = DBTokenStorage()
     
     public func setup(client aClient:String, secret:String) {
@@ -20,14 +22,20 @@ internal final class DBTokenStorage {
     }
     
     public func getToken() -> String? {
-        return keychain.getString(forKey: tokenKey)
+        if(tokenCache != nil){
+            return tokenCache
+        }
+        tokenCache = keychain.getString(forKey: tokenKey)
+        return tokenCache
     }
     
     public func setToken(token value:String)  {
+        tokenCache = value
         let _ = keychain.set(string: value, forKey: tokenKey)
     }
     
     public func deleteToken() {
+        tokenCache = nil
         let _ = keychain.delete(forKey: tokenKey)
     }
 }

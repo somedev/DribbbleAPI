@@ -39,6 +39,13 @@ class ViewController: UIViewController {
         manager.login(from: self, callback: {[weak self] result in
             self?.updateButton(true)
             print("login result: \(result)")
+            
+            RequestSender.defaultSender.send(request: DBShot.currentUserShots(perPage:1)) { result in
+
+                
+            }
+
+            
             //load current user
             RequestSender.defaultSender.send(request: DBUser.currentUserRequest, callback: { r in
                 switch r {
@@ -48,6 +55,9 @@ class ViewController: UIViewController {
                     print("error: \(error)")
                 }
             })
+            
+
+            
             })
     }
     
