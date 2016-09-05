@@ -17,7 +17,7 @@ public final class DBKeychain {
             return false
         }
         
-        delete(forKey: key)
+        let _ = delete(forKey: key)
         
         let query: [String: Any]  = [
             kSecClass as String      : kSecClassGenericPassword,

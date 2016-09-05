@@ -63,7 +63,7 @@ public final class DBLoginManager {
     }
     
     private func getAccessTokenFrom(code aCode:String, callback:DBLoginCallback) {
-        sender.send(request: accessTokenRequestFrom(code: aCode)) {[weak self] result in
+        sender.send(request: accessTokenRequestFrom(code: aCode)) { result in
             switch result {
             case .Success(let token):
                 DBTokenStorage.shared.setToken(token: token)

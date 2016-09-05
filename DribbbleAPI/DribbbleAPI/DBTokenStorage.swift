@@ -24,10 +24,10 @@ internal final class DBTokenStorage {
     }
     
     public func setToken(token value:String)  {
-        keychain.set(string: value, forKey: tokenKey)
+        let _ = keychain.set(string: value, forKey: tokenKey)
     }
     
     public func deleteToken() {
-        keychain.delete(forKey: tokenKey)
+        let _ = keychain.delete(forKey: tokenKey)
     }
 }
