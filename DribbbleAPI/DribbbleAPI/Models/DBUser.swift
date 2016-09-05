@@ -15,16 +15,16 @@ public struct DBUser {
     public let avatarUrl:URL?
     public let bio:String
     public let location:String
-    public let bucketsCount:Int
-    public let commentsReceivedCount:Int
-    public let followersCount:Int
-    public let followingsCount:Int
-    public let likesCount:Int
-    public let likesReceived_count:Int
-    public let projectsCount:Int
-    public let reboundsReceivedCount:Int
-    public let shotsСount:Int
-    public let teamsСount:Int
+    public let bucketsCount:UInt
+    public let commentsReceivedCount:UInt
+    public let followersCount:UInt
+    public let followingsCount:UInt
+    public let likesCount:UInt
+    public let likesReceived_count:UInt
+    public let projectsCount:UInt
+    public let reboundsReceivedCount:UInt
+    public let shotsСount:UInt
+    public let teamsСount:UInt
     public let canUpload:Bool
     public let type:String
     public let isPro:Bool
