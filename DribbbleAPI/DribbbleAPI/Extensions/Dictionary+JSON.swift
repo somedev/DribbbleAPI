@@ -79,6 +79,13 @@ extension UInt: JSONValueType {
     }
 }
 
+extension Date: JSONValueType {
+    public static func JSONValue(_ object: Any) -> Date? {
+        guard let value = (object as? String) else { return nil }
+        return DateFormatter.dbFormatter.date(from: value)
+    }
+}
+
 extension URL: JSONValueType {
     public static func JSONValue(_ object: Any) -> URL? {
         guard let urlString = object as? String,
