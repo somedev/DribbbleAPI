@@ -41,7 +41,7 @@ public final class RequestSender {
                 return
             }
             
-            guard let json = (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)) as? Dictionary<String, Any> else {
+            guard let json = (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)) else {
                 callback(Result.Failure(RequestSenderError.InvalidData))
                 return
             }
