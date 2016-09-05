@@ -16,7 +16,7 @@ public enum RequestType:String {
     case HEAD
 }
 
-public typealias RequestParser<T> = ((Dictionary<String, Any>) -> T?)
+public typealias RequestParser<T> = ((Any) -> T?)
 
 public struct Request<T> {
     public let type:RequestType

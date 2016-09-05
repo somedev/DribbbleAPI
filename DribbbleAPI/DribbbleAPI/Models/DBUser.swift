@@ -62,7 +62,8 @@ extension DBUser {
     public static var currentUserRequest:Request<DBUser> {
         return Request(path: "user",
                        headers: Request<DBUser>.defaultHeaders,
-                       parser: { dict in
+                       parser: { data in
+                        guard let dict = data as? [String:Any] else { return nil }
                         return DBUser(dictionary: dict)
         })
     }
@@ -70,7 +71,8 @@ extension DBUser {
     public func userRequest(id anID:String) -> Request<DBUser> {
         return Request(path: "users/\(anID)",
                        headers: Request<DBUser>.defaultHeaders,
-                       parser: { dict in
+                       parser: { data in
+                        guard let dict = data as? [String:Any] else { return nil }
                         return DBUser(dictionary: dict)
         })
     }

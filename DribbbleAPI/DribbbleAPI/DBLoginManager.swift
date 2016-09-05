@@ -91,7 +91,8 @@ public final class DBLoginManager {
                        headers: [:],
                        params: ["client_id":clientID, "client_secret":clientSecret, "code":aCode],
                        parser: {data in
-                        return data["access_token"] as? String
+                        guard let dict = data as? [String:Any] else { return nil }
+                        return dict["access_token"] as? String
         })
     }
     

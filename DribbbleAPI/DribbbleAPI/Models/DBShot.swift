@@ -59,19 +59,21 @@ extension DBShot {
 }
 
 extension DBShot {
-    public static func currentUserShots(page p:UInt = 1, perPage:UInt = 100) -> Request<DBShot> {
+    public static func currentUserShots(page p:UInt = 1, perPage:UInt = 100) -> Request<[DBShot]> {
         return Request(path: "user/shots",
                        headers: Request<DBShot>.defaultHeaders,
-                       parser: { dict in
-                        return DBShot(dictionary: dict)
+                       parser: { data in
+                        guard let arr = data as? [[String:Any]] else { return nil }
+                        return arr.flatMap({DBShot(dictionary: $0)})
         })
     }
     
-    public static func popularShots(page p:UInt = 1, perPage:UInt = 100) -> Request<DBShot> {
+    public static func popularShots(page p:UInt = 1, perPage:UInt = 100) -> Request<[DBShot]> {
         return Request(path: "shots",
                        headers: Request<DBShot>.defaultHeaders,
-                       parser: { dict in
-                        return DBShot(dictionary: dict)
+                       parser: { data in
+                        guard let arr = data as? [[String:Any]] else { return nil }
+                        return arr.flatMap({DBShot(dictionary: $0)})
         })
     }
 }
