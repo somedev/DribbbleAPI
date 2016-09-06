@@ -16,6 +16,7 @@ public struct DBShot {
     public let description:String
     public let width:Float
     public let height:Float
+    public let hidpi:URL?
     public let normal:URL?
     public let teaser:URL?
     public let viewsCount:UInt
@@ -43,6 +44,7 @@ extension DBShot {
         description = dictionary.JSONValueForKey("description") ?? ""
         width = dictionary.JSONValueForKey("width") ?? 0
         height = dictionary.JSONValueForKey("height") ?? 0
+        hidpi = dictionary.JSONValueForKey("images.hidpi")
         normal = dictionary.JSONValueForKey("images.normal")
         teaser = dictionary.JSONValueForKey("images.teaser")
         viewsCount = dictionary.JSONValueForKey("views_count") ?? 0
@@ -59,9 +61,10 @@ extension DBShot {
 }
 
 extension DBShot {
-    public static func currentUserShots(page p:UInt = 0, perPage:UInt = 100) -> Request<[DBShot]> {
+    public static func currentUserShots(page p:UInt = 1, perPage:UInt = 100) -> Request<[DBShot]> {
         return Request(path: "user/shots",
                        headers: Request<DBShot>.defaultHeaders,
+                       params:["page":"\(p)", "per_page":"\(perPage)"],
                        parser: { data in
                         guard let arr = data as? [[String:Any]] else { return nil }
                         return arr.flatMap({DBShot(dictionary: $0)})
@@ -71,6 +74,7 @@ extension DBShot {
     public static func popularShots(page p:UInt = 0, perPage:UInt = 100) -> Request<[DBShot]> {
         return Request(path: "shots",
                        headers: Request<DBShot>.defaultHeaders,
+                       params:["page":"\(p)", "per_page":"\(perPage)"],
                        parser: { data in
                         guard let arr = data as? [[String:Any]] else { return nil }
                         return arr.flatMap({DBShot(dictionary: $0)})
