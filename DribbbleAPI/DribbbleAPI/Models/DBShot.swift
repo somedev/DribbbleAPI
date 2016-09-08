@@ -9,34 +9,35 @@
 import Foundation
 
 public struct DBShot {
-    public let id:String
-    public let userID:String
-    public let teamID:String
-    public let title:String
-    public let description:String
-    public let width:Float
-    public let height:Float
-    public let hidpi:URL?
-    public let normal:URL?
-    public let teaser:URL?
-    public let viewsCount:UInt
-    public let likesCount:UInt
-    public let commentsCount:UInt
-    public let attachmentsCount:UInt
-    public let reboundsCount:UInt
-    public let bucketsCount:UInt
-    public let created:Date
-    public let updated:Date
-    public let isAnimated:Bool
-    public let tags:[String]
+    public let id: String
+    public let userID: String
+    public let teamID: String
+    public let title: String
+    public let description: String
+    public let width: Float
+    public let height: Float
+    public let hidpi: URL?
+    public let normal: URL?
+    public let teaser: URL?
+    public let viewsCount: UInt
+    public let likesCount: UInt
+    public let commentsCount: UInt
+    public let attachmentsCount: UInt
+    public let reboundsCount: UInt
+    public let bucketsCount: UInt
+    public let created: Date
+    public let updated: Date
+    public let isAnimated: Bool
+    public let tags: [String]
 }
 
 extension DBShot {
-    public init?(dictionary:[String:Any] = [:]){
-        guard let id:String = dictionary.JSONValueForKey("id") else {
+
+    public init?(dictionary: [String: Any] = [:]) {
+        guard let id: String = dictionary.JSONValueForKey("id") else {
             return nil
         }
-        
+
         self.id = id
         userID = dictionary.JSONValueForKey("user.id") ?? ""
         teamID = dictionary.JSONValueForKey("team.id") ?? ""
@@ -61,23 +62,24 @@ extension DBShot {
 }
 
 extension DBShot {
-    public static func currentUserShots(page p:UInt = 1, perPage:UInt = 100) -> Request<[DBShot]> {
+
+    public static func currentUserShots(page p: UInt = 1, perPage: UInt = 100) -> Request<[DBShot]> {
         return Request(path: "user/shots",
-                       headers: Request<DBShot>.defaultHeaders,
-                       params:["page":"\(p)", "per_page":"\(perPage)"],
-                       parser: { data in
-                        guard let arr = data as? [[String:Any]] else { return nil }
-                        return arr.flatMap({DBShot(dictionary: $0)})
+            headers: Request<DBShot>.defaultHeaders,
+            params: ["page": "\(p)", "per_page": "\(perPage)"],
+            parser: { data in
+                guard let arr = data as? [[String: Any]] else { return nil }
+                return arr.flatMap({ DBShot(dictionary: $0) })
         })
     }
-    
-    public static func popularShots(page p:UInt = 0, perPage:UInt = 100) -> Request<[DBShot]> {
+
+    public static func popularShots(page p: UInt = 0, perPage: UInt = 100) -> Request<[DBShot]> {
         return Request(path: "shots",
-                       headers: Request<DBShot>.defaultHeaders,
-                       params:["page":"\(p)", "per_page":"\(perPage)"],
-                       parser: { data in
-                        guard let arr = data as? [[String:Any]] else { return nil }
-                        return arr.flatMap({DBShot(dictionary: $0)})
+            headers: Request<DBShot>.defaultHeaders,
+            params: ["page": "\(p)", "per_page": "\(perPage)"],
+            parser: { data in
+                guard let arr = data as? [[String: Any]] else { return nil }
+                return arr.flatMap({ DBShot(dictionary: $0) })
         })
     }
 }

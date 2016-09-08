@@ -9,33 +9,34 @@
 import Foundation
 
 public struct DBUser {
-    public let id:String
+    public let id: String
     public let name: String
-    public let username:String
-    public let avatarUrl:URL?
-    public let bio:String
-    public let location:String
-    public let bucketsCount:UInt
-    public let commentsReceivedCount:UInt
-    public let followersCount:UInt
-    public let followingsCount:UInt
-    public let likesCount:UInt
-    public let likesReceived_count:UInt
-    public let projectsCount:UInt
-    public let reboundsReceivedCount:UInt
-    public let shotsСount:UInt
-    public let teamsСount:UInt
-    public let canUpload:Bool
-    public let type:String
-    public let isPro:Bool
+    public let username: String
+    public let avatarUrl: URL?
+    public let bio: String
+    public let location: String
+    public let bucketsCount: UInt
+    public let commentsReceivedCount: UInt
+    public let followersCount: UInt
+    public let followingsCount: UInt
+    public let likesCount: UInt
+    public let likesReceived_count: UInt
+    public let projectsCount: UInt
+    public let reboundsReceivedCount: UInt
+    public let shotsСount: UInt
+    public let teamsСount: UInt
+    public let canUpload: Bool
+    public let type: String
+    public let isPro: Bool
 }
 
 extension DBUser {
-    public init?(dictionary:[String:Any] = [:]){
-        guard let id:String = dictionary.JSONValueForKey("id") else {
+
+    public init?(dictionary: [String: Any] = [:]) {
+        guard let id: String = dictionary.JSONValueForKey("id") else {
             return nil
         }
-        
+
         self.id = id
         name = dictionary.JSONValueForKey("name") ?? ""
         username = dictionary.JSONValueForKey("username") ?? ""
@@ -59,21 +60,21 @@ extension DBUser {
 }
 
 extension DBUser {
-    public static var currentUserRequest:Request<DBUser> {
+    public static var currentUserRequest: Request<DBUser> {
         return Request(path: "user",
-                       headers: Request<DBUser>.defaultHeaders,
-                       parser: { data in
-                        guard let dict = data as? [String:Any] else { return nil }
-                        return DBUser(dictionary: dict)
+            headers: Request<DBUser>.defaultHeaders,
+            parser: { data in
+                guard let dict = data as? [String: Any] else { return nil }
+                return DBUser(dictionary: dict)
         })
     }
-    
-    public func userRequest(id anID:String) -> Request<DBUser> {
+
+    public func userRequest(id anID: String) -> Request<DBUser> {
         return Request(path: "users/\(anID)",
-                       headers: Request<DBUser>.defaultHeaders,
-                       parser: { data in
-                        guard let dict = data as? [String:Any] else { return nil }
-                        return DBUser(dictionary: dict)
+            headers: Request<DBUser>.defaultHeaders,
+            parser: { data in
+                guard let dict = data as? [String: Any] else { return nil }
+                return DBUser(dictionary: dict)
         })
     }
 }

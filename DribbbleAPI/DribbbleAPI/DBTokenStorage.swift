@@ -9,31 +9,31 @@
 import Foundation
 
 internal final class DBTokenStorage {
-    
-    private let keychain:DBKeychain = DBKeychain()
-    private var tokenKey:String = DBTokenParameterName
-    
-    private var tokenCache:String?
-    
-    public static var shared:DBTokenStorage = DBTokenStorage()
-    
-    public func setup(client aClient:String, secret:String) {
+
+    private let keychain: DBKeychain = DBKeychain()
+    private var tokenKey: String = DBTokenParameterName
+
+    private var tokenCache: String?
+
+    public static var shared: DBTokenStorage = DBTokenStorage()
+
+    public func setup(client aClient: String, secret: String) {
         tokenKey = "\(aClient)\(secret)\(DBTokenParameterName)"
     }
-    
+
     public func getToken() -> String? {
-        if(tokenCache != nil){
+        if (tokenCache != nil) {
             return tokenCache
         }
         tokenCache = keychain.getString(forKey: tokenKey)
         return tokenCache
     }
-    
-    public func setToken(token value:String)  {
+
+    public func setToken(token value: String) {
         tokenCache = value
         let _ = keychain.set(string: value, forKey: tokenKey)
     }
-    
+
     public func deleteToken() {
         tokenCache = nil
         let _ = keychain.delete(forKey: tokenKey)

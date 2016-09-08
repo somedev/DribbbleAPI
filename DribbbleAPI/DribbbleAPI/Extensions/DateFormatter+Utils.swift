@@ -9,10 +9,10 @@
 import Foundation
 
 extension DateFormatter {
-    @nonobjc public static var dbFormatter:DateFormatter = {
+    @nonobjc public static var dbFormatter: DateFormatter = {
         var formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
-        formatter.locale = Locale(identifier:"en_US_POSIX")
+        formatter.locale = Locale(identifier: "en_US_POSIX")
         return formatter
     }()
 }

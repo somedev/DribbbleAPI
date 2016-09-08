@@ -9,9 +9,10 @@
 import Foundation
 
 extension String {
-    public static func requestStringFrom(dictionary dic:[String:String]) -> String {
-        var params:[String] = []
-        for (k,v) in dic {
+
+    public static func requestStringFrom(dictionary dic: [String: String]) -> String {
+        var params: [String] = []
+        for (k, v) in dic {
             params.append("\(k)=\(v)")
         }
         return params.joined(separator: "&")
