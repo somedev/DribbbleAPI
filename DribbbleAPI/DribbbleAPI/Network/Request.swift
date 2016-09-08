@@ -29,7 +29,7 @@ public struct Request<T> {
                 path:String,
                 headers:[String:String] = Request.defaultHeaders,
                 params:[String:String] = [:],
-                parser:RequestParser<T>){
+                parser:@escaping RequestParser<T>){
         self.type = type
         self.path = path
         self.headers = headers

@@ -28,7 +28,7 @@ public final class DBLoginManager {
         DBTokenStorage.shared.setup(client: clientID, secret: clientSecret)
     }
     
-    public func login(from viewController:UIViewController, callback:DBLoginCallback) {
+    public func login(from viewController:UIViewController, callback:@escaping DBLoginCallback) {
         let job:DBCallback = { [weak self] in
             guard let manager = self else { return }
             let controller = DBLoginViewController(callback: manager.controllerCallback(callback:callback),
@@ -52,7 +52,7 @@ public final class DBLoginManager {
     }
     
     //MARK: - private
-    private func controllerCallback(callback aCallback:DBLoginCallback) -> DBLoginViewControllerCallback {
+    private func controllerCallback(callback aCallback:@escaping DBLoginCallback) -> DBLoginViewControllerCallback {
         return { [weak self] code, success in
             guard let code = code, success == true else {
                 aCallback(false)
@@ -62,7 +62,7 @@ public final class DBLoginManager {
         }
     }
     
-    private func getAccessTokenFrom(code aCode:String, callback:DBLoginCallback) {
+    private func getAccessTokenFrom(code aCode:String, callback:@escaping DBLoginCallback) {
         sender.send(request: accessTokenRequestFrom(code: aCode)) { result in
             switch result {
             case .Success(let token):

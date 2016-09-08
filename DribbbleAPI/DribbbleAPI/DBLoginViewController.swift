@@ -18,7 +18,7 @@ public final class DBLoginViewController: UIViewController, WKNavigationDelegate
     private var loadURL:URL?
     private var callbackURL:URL?
     
-    public init(callback aCallback:DBLoginViewControllerCallback, loadURL:URL?, callbackURL:URL) {
+    public init(callback aCallback:@escaping DBLoginViewControllerCallback, loadURL:URL?, callbackURL:URL) {
         super.init(nibName:nil, bundle:nil)
         self.callback = aCallback
         self.loadURL = loadURL
