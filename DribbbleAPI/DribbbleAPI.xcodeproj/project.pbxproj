@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		64109C331D6CCB9000B0242E /* DribbbleAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64109C291D6CCB9000B0242E /* DribbbleAPI.framework */; };
 		64109C3A1D6CCB9000B0242E /* DribbbleAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 64109C2C1D6CCB9000B0242E /* DribbbleAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		64109C941D6CD12400B0242E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64109C931D6CD12400B0242E /* Foundation.framework */; };
-		64109C961D6CD12A00B0242E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64109C951D6CD12A00B0242E /* UIKit.framework */; };
+		64109C941D6CD12400B0242E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64109C931D6CD12400B0242E /* Foundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		64109C961D6CD12A00B0242E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64109C951D6CD12A00B0242E /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		64109C981D6CD28100B0242E /* DBLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64109C971D6CD28100B0242E /* DBLoginManager.swift */; };
 		64109C9A1D6CD2FB00B0242E /* DBLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64109C991D6CD2FB00B0242E /* DBLoginViewController.swift */; };
-		64109C9C1D6CD36500B0242E /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64109C9B1D6CD36500B0242E /* WebKit.framework */; };
+		64109C9C1D6CD36500B0242E /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64109C9B1D6CD36500B0242E /* WebKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		64109C9E1D6CD51100B0242E /* DBConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64109C9D1D6CD51100B0242E /* DBConstants.swift */; };
 		64109CA01D6CDF2C00B0242E /* DBScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64109C9F1D6CDF2C00B0242E /* DBScope.swift */; };
 		64109CA31D6CE2DC00B0242E /* DBScopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64109CA21D6CE2DC00B0242E /* DBScopeTests.swift */; };
@@ -24,7 +24,7 @@
 		649A61DE1D749A5F003ADABE /* DBNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649A61DD1D749A5F003ADABE /* DBNavigationViewController.swift */; };
 		649A61E01D74A315003ADABE /* DBTokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649A61DF1D74A315003ADABE /* DBTokenStorage.swift */; };
 		649A61E31D74A716003ADABE /* DBKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649A61E21D74A716003ADABE /* DBKeychain.swift */; };
-		649A61E51D74B3DE003ADABE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649A61E41D74B3DE003ADABE /* Security.framework */; };
+		649A61E51D74B3DE003ADABE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649A61E41D74B3DE003ADABE /* Security.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		64B788BA1D789DC6008C525A /* DBUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B788B91D789DC6008C525A /* DBUser.swift */; };
 		64B788C01D78A68A008C525A /* Dictionary+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B788BF1D78A68A008C525A /* Dictionary+JSON.swift */; };
 		64E8DC4F1D7DE713002E02F1 /* DBShot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DC4E1D7DE713002E02F1 /* DBShot.swift */; };
