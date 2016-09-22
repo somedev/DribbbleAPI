@@ -31,26 +31,36 @@ public final class RequestSender {
         let urlRequest = r.requestWith(baseURL: baseURL)
         let task = urlSession.dataTask(with: urlRequest) { data, response, error in
             if let error = error {
-                callback(Result.Failure(error))
+                DispatchQueue.main.async {
+                    callback(Result.Failure(error))
+                }
                 return
             }
 
             guard let data = data else {
-                callback(Result.Failure(RequestSenderError.NoData))
+                DispatchQueue.main.async {
+                    callback(Result.Failure(RequestSenderError.NoData))
+                }
                 return
             }
 
             guard let json = (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)) else {
-                callback(Result.Failure(RequestSenderError.InvalidData))
+                DispatchQueue.main.async {
+                    callback(Result.Failure(RequestSenderError.InvalidData))
+                }
                 return
             }
 
             guard let result = r.parser(json) else {
-                callback(Result.Failure(RequestSenderError.ParserError))
+                DispatchQueue.main.async {
+                    callback(Result.Failure(RequestSenderError.ParserError))
+                }
                 return
             }
 
-            callback(Result.Success(result))
+            DispatchQueue.main.async {
+                callback(Result.Success(result))
+            }
         }
 
         task.resume()
