@@ -39,9 +39,6 @@ class ViewController: UIViewController {
             self?.updateButton(true)
             print("login result: \(result)")
 
-            RequestSender.defaultSender.send(request: DBShot.currentUserShots(perPage: 1)) { result in
-            }
-
             // load current user
             DBUser.loadCurrentUser({ r in
                 switch r {
