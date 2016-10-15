@@ -43,7 +43,7 @@ class ViewController: UIViewController {
             }
 
             // load current user
-            RequestSender.defaultSender.send(request: DBUser.currentUserRequest, callback: { r in
+            DBUser.loadCurrentUser({ r in
                 switch r {
                 case .Success(let user):
                     print("user: \(user)")

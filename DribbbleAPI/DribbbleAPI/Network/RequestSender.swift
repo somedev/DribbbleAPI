@@ -12,7 +12,10 @@ enum RequestSenderError: Error {
     case NoData
     case InvalidData
     case ParserError
+    case InvalidStatusCode(code:Int)
 }
+
+public typealias RequestCallback<T> = ((Result<T>) -> ())
 
 public final class RequestSender {
 
@@ -27,7 +30,7 @@ public final class RequestSender {
         self.baseURL = url
     }
 
-    public func send<T>(request r: Request<T>, callback: @escaping(Result<T>) -> ()) {
+    public func send<T>(request r: Request<T>, callback: @escaping RequestCallback<T>) {
         let urlRequest = r.requestWith(baseURL: baseURL)
         let task = urlSession.dataTask(with: urlRequest) { data, response, error in
             if let error = error {
@@ -37,6 +40,13 @@ public final class RequestSender {
                 return
             }
 
+            if let response = response, !response.isValidStatus {
+                DispatchQueue.main.async {
+                    callback(Result.Failure(RequestSenderError.InvalidStatusCode(code: response.status)))
+                }
+                return
+            }
+            
             guard let data = data else {
                 DispatchQueue.main.async {
                     callback(Result.Failure(RequestSenderError.NoData))
@@ -64,5 +74,18 @@ public final class RequestSender {
         }
 
         task.resume()
+    }
+}
+
+
+public extension URLResponse {
+    public var isValidStatus:Bool {
+        guard let response = self as? HTTPURLResponse else { return true }
+        return response.statusCode >= 200 && response.statusCode < 300
+    }
+    
+    public var status:Int {
+        guard let response = self as? HTTPURLResponse else { return 200 }
+        return response.statusCode
     }
 }

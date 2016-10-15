@@ -60,7 +60,7 @@ extension DBUser {
 }
 
 extension DBUser {
-    public static var currentUserRequest: Request<DBUser> {
+    static var currentUserRequest: Request<DBUser> {
         return Request(path: "user",
             headers: Request<DBUser>.defaultHeaders,
             parser: { data in
@@ -69,12 +69,24 @@ extension DBUser {
         })
     }
 
-    public func userRequest(id anID: String) -> Request<DBUser> {
+    static func userRequest(id anID: String) -> Request<DBUser> {
         return Request(path: "users/\(anID)",
             headers: Request<DBUser>.defaultHeaders,
             parser: { data in
                 guard let dict = data as? [String: Any] else { return nil }
                 return DBUser(dictionary: dict)
         })
+    }
+}
+
+extension DBUser {
+    public static func loadUser(id anID: String, callback:@escaping RequestCallback<DBUser>) {
+        RequestSender.defaultSender.send(request: DBUser.userRequest(id: anID),
+                                         callback: callback)
+    }
+    
+    public static func loadCurrentUser(_ callback:@escaping RequestCallback<DBUser>) {
+        RequestSender.defaultSender.send(request: DBUser.currentUserRequest,
+                                         callback: callback)
     }
 }
