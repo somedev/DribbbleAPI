@@ -18,6 +18,7 @@
 		64109CA01D6CDF2C00B0242E /* DBScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64109C9F1D6CDF2C00B0242E /* DBScope.swift */; };
 		64109CA31D6CE2DC00B0242E /* DBScopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64109CA21D6CE2DC00B0242E /* DBScopeTests.swift */; };
 		6441EA4F1DCF3F2F00E9CD47 /* DBBucket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6441EA4E1DCF3F2F00E9CD47 /* DBBucket.swift */; };
+		6441EA511DCF47A700E9CD47 /* DBProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6441EA501DCF47A700E9CD47 /* DBProject.swift */; };
 		648660791D760E0E00BCB455 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648660781D760E0E00BCB455 /* Request.swift */; };
 		6486607B1D760E3000BCB455 /* RequestSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6486607A1D760E3000BCB455 /* RequestSender.swift */; };
 		6486607D1D7611C100BCB455 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6486607C1D7611C100BCB455 /* Result.swift */; };
@@ -58,6 +59,7 @@
 		64109CA11D6CE2DB00B0242E /* DribbbleAPITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DribbbleAPITests-Bridging-Header.h"; sourceTree = "<group>"; };
 		64109CA21D6CE2DC00B0242E /* DBScopeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBScopeTests.swift; sourceTree = "<group>"; };
 		6441EA4E1DCF3F2F00E9CD47 /* DBBucket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBBucket.swift; sourceTree = "<group>"; };
+		6441EA501DCF47A700E9CD47 /* DBProject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBProject.swift; sourceTree = "<group>"; };
 		648660781D760E0E00BCB455 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		6486607A1D760E3000BCB455 /* RequestSender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestSender.swift; sourceTree = "<group>"; };
 		6486607C1D7611C100BCB455 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				64B788B91D789DC6008C525A /* DBUser.swift */,
 				64E8DC4E1D7DE713002E02F1 /* DBShot.swift */,
 				6441EA4E1DCF3F2F00E9CD47 /* DBBucket.swift */,
+				6441EA501DCF47A700E9CD47 /* DBProject.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -324,6 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				64B788BA1D789DC6008C525A /* DBUser.swift in Sources */,
+				6441EA511DCF47A700E9CD47 /* DBProject.swift in Sources */,
 				648660801D76157E00BCB455 /* String+Utils.swift in Sources */,
 				64109CA01D6CDF2C00B0242E /* DBScope.swift in Sources */,
 				648660791D760E0E00BCB455 /* Request.swift in Sources */,
