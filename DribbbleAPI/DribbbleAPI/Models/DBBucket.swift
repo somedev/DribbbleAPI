@@ -35,7 +35,7 @@ extension DBBucket {
     }
 }
 
-//MARK: - requests
+//MARK: - Buscket requests
 extension DBBucket {
     static func getBucketRequest(id id: String) -> Request<DBBucket> {
         return Request(path: "buckets/\(id)",
@@ -74,6 +74,32 @@ extension DBBucket {
             headers: Request<Bool>.defaultHeaders,
             parser: { _ in return true})
     }
+    
+    static func getBucketShotsRequest(id id: String, page: UInt = 1, perPage: UInt = 100) -> Request<[DBShot]> {
+        return Request(path: "buckets/\(id)/shots",
+            headers: Request<DBBucket>.defaultHeaders,
+            params: ["page": "\(page)", "per_page": "\(perPage)"],
+            parser: { data in
+                guard let arr = data as? [[String: Any]] else { return nil }
+                return arr.flatMap({ DBShot(dictionary: $0) })
+        })
+    }
+    
+    static func addShotToBucketRequest(id id:String, shotID: String) -> Request<Bool> {
+        return Request(type:.PUT,
+                       path: "buckets/\(id)/shots",
+            headers: Request<DBBucket>.defaultHeaders,
+            params:["shot_id":shotID],
+            parser: {_ in return true})
+    }
+    
+    static func deleteShotFromBucketRequest(id id:String, shotID: String) -> Request<Bool> {
+        return Request(type:.DELETE,
+                       path: "buckets/\(id)/shots",
+            headers: Request<Bool>.defaultHeaders,
+            params:["shot_id":shotID],
+            parser: { _ in return true})
+    }
 }
 
 //MARK: - operations with Bucket
@@ -95,6 +121,21 @@ extension DBBucket {
     
     public static func deleteBucket(id id: String, callback:@escaping RequestCallback<Bool>) {
         RequestSender.defaultSender.send(request: DBBucket.deleteBucketRequest(id: id),
+                                         callback: callback)
+    }
+    
+    public static func loadBucketShots(id anID: String, page: UInt = 1, perPage: UInt = 100, callback:@escaping RequestCallback<[DBShot]>) {
+        RequestSender.defaultSender.send(request: DBBucket.getBucketShotsRequest(id: anID, page:page, perPage:perPage),
+                                         callback: callback)
+    }
+    
+    public static func addShotToBucket(id id: String, shotID:String, callback:@escaping RequestCallback<Bool>) {
+        RequestSender.defaultSender.send(request: DBBucket.addShotToBucketRequest(id: id, shotID: shotID),
+                                         callback: callback)
+    }
+    
+    public static func deleteShotFromBucket(id id: String, shotID:String, callback:@escaping RequestCallback<Bool>) {
+        RequestSender.defaultSender.send(request: DBBucket.deleteShotFromBucketRequest(id: id, shotID: shotID),
                                          callback: callback)
     }
 }
