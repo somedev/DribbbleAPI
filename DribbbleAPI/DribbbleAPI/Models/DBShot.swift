@@ -10,8 +10,6 @@ import Foundation
 
 public struct DBShot {
     public let id: String
-    public let userID: String
-    public let teamID: String
     public let title: String
     public let description: String
     public let width: Float
@@ -27,8 +25,11 @@ public struct DBShot {
     public let bucketsCount: UInt
     public let created: Date
     public let updated: Date
+    public let htmlURL: URL?
     public let isAnimated: Bool
     public let tags: [String]
+    public let user: DBUser?
+    public let team: DBTeam?
 }
 
 extension DBShot {
@@ -39,8 +40,6 @@ extension DBShot {
         }
 
         self.id = id
-        userID = dictionary.JSONValueForKey("user.id") ?? ""
-        teamID = dictionary.JSONValueForKey("team.id") ?? ""
         title = dictionary.JSONValueForKey("title") ?? ""
         description = dictionary.JSONValueForKey("description") ?? ""
         width = dictionary.JSONValueForKey("width") ?? 0
@@ -58,6 +57,9 @@ extension DBShot {
         updated = dictionary.JSONValueForKey("updated_at") ?? Date()
         isAnimated = dictionary.JSONValueForKey("animated") ?? false
         tags = dictionary.JSONValueForKey("tags") ?? []
+        user = dictionary.JSONValueForKey("user")
+        team = dictionary.JSONValueForKey("team")
+        htmlURL = dictionary.JSONValueForKey("html_url")
     }
 }
 
