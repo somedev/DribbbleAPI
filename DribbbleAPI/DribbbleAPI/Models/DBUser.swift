@@ -79,6 +79,15 @@ extension DBUser {
     }
 }
 
+extension DBUser: JSONValueType {
+    public static func JSONValue(_ object: Any) -> DBUser? {
+        guard let userDict = object as? [String:Any],
+            let user = DBUser(dictionary:userDict) else { return nil }
+        return user
+    }
+}
+
+
 extension DBUser {
     public static func loadUser(id anID: String, callback:@escaping RequestCallback<DBUser>) {
         RequestSender.defaultSender.send(request: DBUser.userRequest(id: anID),
