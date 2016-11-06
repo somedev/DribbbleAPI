@@ -12,9 +12,11 @@ public struct DBUser {
     public let id: String
     public let name: String
     public let username: String
+    public let htmlURL: URL?
     public let avatarUrl: URL?
     public let bio: String
     public let location: String
+    public let links:[DBLink]?
     public let bucketsCount: UInt
     public let commentsReceivedCount: UInt
     public let followersCount: UInt
@@ -28,6 +30,8 @@ public struct DBUser {
     public let canUpload: Bool
     public let type: String
     public let isPro: Bool
+    public let created: Date
+    public let updated: Date
 }
 
 extension DBUser {
@@ -41,6 +45,7 @@ extension DBUser {
         name = dictionary.JSONValueForKey("name") ?? ""
         username = dictionary.JSONValueForKey("username") ?? ""
         avatarUrl = dictionary.JSONValueForKey("avatar_url")
+        htmlURL = dictionary.JSONValueForKey("html_url")
         bio = dictionary.JSONValueForKey("bio") ?? ""
         location = dictionary.JSONValueForKey("location") ?? ""
         bucketsCount = dictionary.JSONValueForKey("buckets_count") ?? 0
@@ -56,6 +61,13 @@ extension DBUser {
         canUpload = dictionary.JSONValueForKey("can_upload_shot") ?? false
         type = dictionary.JSONValueForKey("type") ?? ""
         isPro = dictionary.JSONValueForKey("pro") ?? false
+        created = dictionary.JSONValueForKey("created_at") ?? Date()
+        updated = dictionary.JSONValueForKey("updated_at") ?? Date()
+        if let linksDict = dictionary["links"] as? [String:String] {
+            links = DBLink.links(from: linksDict)
+        } else {
+            links = nil
+        }
     }
 }
 
