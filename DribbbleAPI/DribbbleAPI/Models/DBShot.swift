@@ -8,6 +8,74 @@
 
 import Foundation
 
+public enum DBList:String {
+    case animated
+    case attachments
+    case debuts
+    case playoffs
+    case rebounds
+    case teams
+}
+
+public enum DBTimeFrame:String {
+    case week
+    case month
+    case year
+    case ever
+}
+
+public enum DBSort:String {
+    case comments
+    case recent
+    case views
+}
+
+public struct DBShotRequestParams {
+    public let list: DBList?
+    public let timeFrame: DBTimeFrame?
+    public let date: Date?
+    public let sort: DBSort?
+    public let page: UInt
+    public let perPage: UInt
+    
+    private static var dateFormatter:DateFormatter =  {
+        var formatter = DateFormatter()
+        formatter.dateFormat = "YYYY-MM-DD"
+        return formatter
+    }()
+    
+    public init(list: DBList? = nil, timeFrame: DBTimeFrame? = nil,
+                date: Date? = nil, sort: DBSort? = nil,
+                page: UInt = 1, perPage: UInt = 100) {
+        self.list = list
+        self.timeFrame = timeFrame
+        self.date = date
+        self.sort = sort
+        self.page = page
+        self.perPage = perPage
+    }
+    
+    public var params: [String:Any] {
+        var result: [String:Any] = [:]
+        if let list = self.list {
+            result["list"] = list.rawValue
+        }
+        if let timeFrame = self.timeFrame {
+            result["timeframe"] = timeFrame.rawValue
+        }
+        if let sort = self.sort {
+            result["sort"] = sort.rawValue
+        }
+        if let date = self.date {
+            result["date"] = DBShotRequestParams.dateFormatter.string(from: date)
+        }
+        result["page"] = page
+        result["per_page"] = perPage
+        return result
+    }
+    
+}
+
 public struct DBShot {
     public let id: String
     public let title: String
@@ -65,30 +133,30 @@ extension DBShot {
 
 extension DBShot {
 
-    static func currentUserShots(page p: UInt = 1, perPage: UInt = 100) -> Request<[DBShot]> {
+    static func currentUserShots(params:DBShotRequestParams? = nil) -> Request<[DBShot]> {
         return Request(path: "user/shots",
             headers: Request<DBShot>.defaultHeaders,
-            params: ["page": "\(p)", "per_page": "\(perPage)"],
+            params: params?.params,
             parser: { data in
                 guard let arr = data as? [[String: Any]] else { return nil }
                 return arr.flatMap({ DBShot(dictionary: $0) })
         })
     }
 
-    static func userShots(userID id: String, page: UInt = 1, perPage: UInt = 100) -> Request<[DBShot]> {
+    static func userShots(id id:String, params:DBShotRequestParams? = nil) -> Request<[DBShot]> {
         return Request(path: "user/\(id)/shots",
                        headers: Request<DBShot>.defaultHeaders,
-                       params: ["page": "\(page)", "per_page": "\(perPage)"],
+                       params: params?.params,
                        parser: { data in
                         guard let arr = data as? [[String: Any]] else { return nil }
                         return arr.flatMap({ DBShot(dictionary: $0) })
         })
     }
     
-    static func popularShots(page p: UInt = 0, perPage: UInt = 100) -> Request<[DBShot]> {
+    static func popularShots(params:DBShotRequestParams? = nil) -> Request<[DBShot]> {
         return Request(path: "shots",
             headers: Request<DBShot>.defaultHeaders,
-            params: ["page": "\(p)", "per_page": "\(perPage)"],
+            params: params?.params,
             parser: { data in
                 guard let arr = data as? [[String: Any]] else { return nil }
                 return arr.flatMap({ DBShot(dictionary: $0) })
@@ -98,24 +166,21 @@ extension DBShot {
 
 extension DBShot {
     public static func loadUserShots(userID id: String,
-                                     page: UInt = 1,
-                                     perPage: UInt = 100,
+                                     params:DBShotRequestParams? = nil,
                                      callback:@escaping RequestCallback<[DBShot]>) {
-        RequestSender.defaultSender.send(request: DBShot.userShots(userID: id, page: page, perPage: perPage),
+        RequestSender.defaultSender.send(request: DBShot.userShots(id:id, params:params),
                                          callback: callback)
     }
     
-    public static func loadCurrentUserShots(page p: UInt = 1,
-                                     perPage: UInt = 100,
+    public static func loadCurrentUserShots(params params:DBShotRequestParams? = nil,
                                      callback:@escaping RequestCallback<[DBShot]>) {
-        RequestSender.defaultSender.send(request: DBShot.currentUserShots(page: p, perPage: perPage),
+        RequestSender.defaultSender.send(request: DBShot.currentUserShots(params:params),
                                          callback: callback)
     }
 
-    public static func loadPopularShots(page p: UInt = 1,
-                                            perPage: UInt = 100,
+    public static func loadPopularShots(params params:DBShotRequestParams? = nil,
                                             callback:@escaping RequestCallback<[DBShot]>) {
-        RequestSender.defaultSender.send(request: DBShot.popularShots(page: p, perPage: perPage),
+        RequestSender.defaultSender.send(request: DBShot.popularShots(params:params),
                                          callback: callback)
     }
     

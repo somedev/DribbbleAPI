@@ -22,13 +22,13 @@ public struct Request<T> {
     public let type: RequestType
     public let path: String
     public let headers: [String: String]
-    public let params: [String: String]
+    public let params: [String: Any]?
     public let parser: RequestParser<T>
 
     public init(type: RequestType = .GET,
         path: String,
         headers: [String: String] = Request.defaultHeaders,
-        params: [String: String] = [:],
+        params: [String: Any]? = nil,
         parser: @escaping RequestParser<T>) {
         self.type = type
         self.path = path
@@ -48,13 +48,16 @@ public extension Request {
 
     public func requestWith(baseURL anUrl: URL) -> URLRequest {
         var url = anUrl.appendingPathComponent(path)
-        let data = String.requestStringFrom(dictionary: params)
         var request = URLRequest(url: url)
-        if (data.characters.count > 0 && type == .GET) {
-            url = url.appendingPathComponent("?\(data)")
-        } else {
-            request.httpBody = data.data(using: .utf8)
+        if  let params = self.params {
+            let data = String.requestStringFrom(dictionary: params)
+            if (data.characters.count > 0 && type == .GET) {
+                url = url.appendingPathComponent("?\(data)")
+            } else {
+                request.httpBody = data.data(using: .utf8)
+            }
         }
+        
         request.httpMethod = type.rawValue
         request.allHTTPHeaderFields = headers
         return request
