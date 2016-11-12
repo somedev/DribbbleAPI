@@ -31,6 +31,8 @@
 		649A61E51D74B3DE003ADABE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649A61E41D74B3DE003ADABE /* Security.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		64B788BA1D789DC6008C525A /* DBUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B788B91D789DC6008C525A /* DBUser.swift */; };
 		64B788C01D78A68A008C525A /* Dictionary+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B788BF1D78A68A008C525A /* Dictionary+JSON.swift */; };
+		64D9E02E1DD727E400C1E2F1 /* DBPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D9E02D1DD727E400C1E2F1 /* DBPage.swift */; };
+		64D9E0301DD72BA900C1E2F1 /* Dictionary+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D9E02F1DD72BA900C1E2F1 /* Dictionary+Utils.swift */; };
 		64E8DC4F1D7DE713002E02F1 /* DBShot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DC4E1D7DE713002E02F1 /* DBShot.swift */; };
 		64E8DC511D7DEB7F002E02F1 /* DateFormatter+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E8DC501D7DEB7F002E02F1 /* DateFormatter+Utils.swift */; };
 /* End PBXBuildFile section */
@@ -74,6 +76,8 @@
 		649A61E41D74B3DE003ADABE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		64B788B91D789DC6008C525A /* DBUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBUser.swift; sourceTree = "<group>"; };
 		64B788BF1D78A68A008C525A /* Dictionary+JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+JSON.swift"; sourceTree = "<group>"; };
+		64D9E02D1DD727E400C1E2F1 /* DBPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBPage.swift; sourceTree = "<group>"; };
+		64D9E02F1DD72BA900C1E2F1 /* Dictionary+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+Utils.swift"; sourceTree = "<group>"; };
 		64E8DC4E1D7DE713002E02F1 /* DBShot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBShot.swift; sourceTree = "<group>"; };
 		64E8DC501D7DEB7F002E02F1 /* DateFormatter+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Utils.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -177,6 +181,7 @@
 				6486607F1D76157E00BCB455 /* String+Utils.swift */,
 				64B788BF1D78A68A008C525A /* Dictionary+JSON.swift */,
 				64E8DC501D7DEB7F002E02F1 /* DateFormatter+Utils.swift */,
+				64D9E02F1DD72BA900C1E2F1 /* Dictionary+Utils.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -184,6 +189,7 @@
 		64B788B81D789D9D008C525A /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				64D9E02D1DD727E400C1E2F1 /* DBPage.swift */,
 				64B788B91D789DC6008C525A /* DBUser.swift */,
 				64E8DC4E1D7DE713002E02F1 /* DBShot.swift */,
 				6441EA4E1DCF3F2F00E9CD47 /* DBBucket.swift */,
@@ -334,6 +340,7 @@
 			files = (
 				64B788BA1D789DC6008C525A /* DBUser.swift in Sources */,
 				6441EA511DCF47A700E9CD47 /* DBProject.swift in Sources */,
+				64D9E02E1DD727E400C1E2F1 /* DBPage.swift in Sources */,
 				6441EA551DCF4A4900E9CD47 /* DBLink.swift in Sources */,
 				6441EA531DCF49A800E9CD47 /* DBTeam.swift in Sources */,
 				648660801D76157E00BCB455 /* String+Utils.swift in Sources */,
@@ -345,6 +352,7 @@
 				64109C9A1D6CD2FB00B0242E /* DBLoginViewController.swift in Sources */,
 				64109C981D6CD28100B0242E /* DBLoginManager.swift in Sources */,
 				6486607B1D760E3000BCB455 /* RequestSender.swift in Sources */,
+				64D9E0301DD72BA900C1E2F1 /* Dictionary+Utils.swift in Sources */,
 				6486607D1D7611C100BCB455 /* Result.swift in Sources */,
 				64E8DC511D7DEB7F002E02F1 /* DateFormatter+Utils.swift in Sources */,
 				64109C9E1D6CD51100B0242E /* DBConstants.swift in Sources */,
