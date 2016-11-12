@@ -109,17 +109,17 @@ extension DBBucket {
                                          callback: callback)
     }
     
-    public static func createBucket(name name:String, description:String? ,callback:@escaping RequestCallback<DBBucket>) {
+    public static func createBucket(name:String, description:String? ,callback:@escaping RequestCallback<DBBucket>) {
         RequestSender.defaultSender.send(request: DBBucket.createBucketRequest(name: name, description: description),
                                          callback: callback)
     }
     
-    public static func updateBucket(id id:String, name:String, description:String? ,callback:@escaping RequestCallback<DBBucket>) {
+    public static func updateBucket(id:String, name:String, description:String? ,callback:@escaping RequestCallback<DBBucket>) {
         RequestSender.defaultSender.send(request: DBBucket.updateBucketRequest(id: id, name: name, description: description),
                                          callback: callback)
     }
     
-    public static func deleteBucket(id id: String, callback:@escaping RequestCallback<Bool>) {
+    public static func deleteBucket(id: String, callback:@escaping RequestCallback<Bool>) {
         RequestSender.defaultSender.send(request: DBBucket.deleteBucketRequest(id: id),
                                          callback: callback)
     }
@@ -129,12 +129,12 @@ extension DBBucket {
                                          callback: callback)
     }
     
-    public static func addShotToBucket(id id: String, shotID:String, callback:@escaping RequestCallback<Bool>) {
+    public static func addShotToBucket(id: String, shotID:String, callback:@escaping RequestCallback<Bool>) {
         RequestSender.defaultSender.send(request: DBBucket.addShotToBucketRequest(id: id, shotID: shotID),
                                          callback: callback)
     }
     
-    public static func deleteShotFromBucket(id id: String, shotID:String, callback:@escaping RequestCallback<Bool>) {
+    public static func deleteShotFromBucket(id: String, shotID:String, callback:@escaping RequestCallback<Bool>) {
         RequestSender.defaultSender.send(request: DBBucket.deleteShotFromBucketRequest(id: id, shotID: shotID),
                                          callback: callback)
     }

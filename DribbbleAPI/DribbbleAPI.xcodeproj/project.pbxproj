@@ -17,6 +17,7 @@
 		64109C9E1D6CD51100B0242E /* DBConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64109C9D1D6CD51100B0242E /* DBConstants.swift */; };
 		64109CA01D6CDF2C00B0242E /* DBScope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64109C9F1D6CDF2C00B0242E /* DBScope.swift */; };
 		64109CA31D6CE2DC00B0242E /* DBScopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64109CA21D6CE2DC00B0242E /* DBScopeTests.swift */; };
+		641129341DD732210092A191 /* DictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641129331DD732210092A191 /* DictionaryTests.swift */; };
 		6441EA4F1DCF3F2F00E9CD47 /* DBBucket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6441EA4E1DCF3F2F00E9CD47 /* DBBucket.swift */; };
 		6441EA511DCF47A700E9CD47 /* DBProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6441EA501DCF47A700E9CD47 /* DBProject.swift */; };
 		6441EA531DCF49A800E9CD47 /* DBTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6441EA521DCF49A800E9CD47 /* DBTeam.swift */; };
@@ -62,6 +63,7 @@
 		64109C9F1D6CDF2C00B0242E /* DBScope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBScope.swift; sourceTree = "<group>"; };
 		64109CA11D6CE2DB00B0242E /* DribbbleAPITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DribbbleAPITests-Bridging-Header.h"; sourceTree = "<group>"; };
 		64109CA21D6CE2DC00B0242E /* DBScopeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBScopeTests.swift; sourceTree = "<group>"; };
+		641129331DD732210092A191 /* DictionaryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryTests.swift; sourceTree = "<group>"; };
 		6441EA4E1DCF3F2F00E9CD47 /* DBBucket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBBucket.swift; sourceTree = "<group>"; };
 		6441EA501DCF47A700E9CD47 /* DBProject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBProject.swift; sourceTree = "<group>"; };
 		6441EA521DCF49A800E9CD47 /* DBTeam.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBTeam.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				64109C391D6CCB9000B0242E /* Info.plist */,
 				64109CA21D6CE2DC00B0242E /* DBScopeTests.swift */,
 				64109CA11D6CE2DB00B0242E /* DribbbleAPITests-Bridging-Header.h */,
+				641129331DD732210092A191 /* DictionaryTests.swift */,
 			);
 			path = DribbbleAPITests;
 			sourceTree = "<group>";
@@ -367,6 +370,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				64109CA31D6CE2DC00B0242E /* DBScopeTests.swift in Sources */,
+				641129341DD732210092A191 /* DictionaryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

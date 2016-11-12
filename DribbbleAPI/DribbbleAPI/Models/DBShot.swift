@@ -136,7 +136,7 @@ extension DBShot {
         })
     }
     
-    static func userShots(id id:String, page:DBPage = DBPage()) -> Request<[DBShot]> {
+    static func userShots(id:String, page:DBPage = DBPage()) -> Request<[DBShot]> {
         return Request(path: "user/\(id)/shots",
             headers: Request<DBShot>.defaultHeaders,
             params: page.params,
@@ -144,6 +144,41 @@ extension DBShot {
                 guard let arr = data as? [[String: Any]] else { return nil }
                 return arr.flatMap({ DBShot(dictionary: $0) })
         })
+    }
+    
+    static func getShot(id:String) -> Request<DBShot> {
+        return Request(path: "shots/\(id)",
+            headers: Request<DBShot>.defaultHeaders,
+            parser: { data in
+                guard let data = data as? [String: Any] else { return nil }
+                return DBShot(dictionary: data)
+        })
+    }
+    
+    static func deleteShot(id:String) -> Request<Bool> {
+        return Request(type:.DELETE,
+                       path: "shots/\(id)",
+            headers: Request<DBShot>.defaultHeaders,
+            parser: { _ in return true})
+    }
+    
+    static func updateShot(id:String, title:String? = nil,
+                           description:String? = nil, teamID:String? = nil,
+                           tags:[String]? = nil) -> Request<Bool> {
+        
+        let dirtyParams:[String:Any?] = ["title":title, "description":description, "team_id":teamID, "tags":tags]
+        let params = dirtyParams.reduce([String:Any](), { dict, pair in
+            guard let value = pair.value else { return dict }
+            var result = dict
+            result[pair.key] = value
+            return result
+        })
+        
+        return Request(type:.PUT,
+                       path: "shots/\(id)",
+            headers: Request<DBShot>.defaultHeaders,
+            params: params,
+            parser: { _ in return true})
     }
     
     static func popularShots(params:DBShotRequestParams? = nil, page:DBPage = DBPage()) ->
@@ -184,5 +219,4 @@ extension DBShot {
         RequestSender.defaultSender.send(request: DBShot.popularShots(params:params, page:page),
                                          callback: callback)
     }
-    
 }
