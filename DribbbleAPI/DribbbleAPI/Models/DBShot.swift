@@ -30,6 +30,34 @@ public enum DBSort:String {
     case views
 }
 
+public struct DBShotUpdateParams {
+    public let title:String?
+    public let description:String?
+    public let teamID:String?
+    public let tags:[String]?
+    
+    public var params: [String:Any] {
+        var result: [String:Any] = [:]
+        if let title = self.title {
+            result["title"] = title
+        }
+        if let description = self.description {
+            result["description"] = description
+        }
+        if let teamID = self.teamID {
+            result["teamID"] = teamID
+        }
+        if let tags = self.tags {
+            let tagsString:String = tags.reduce("", { acc, value in
+                return acc + "," + value
+            })
+            
+            result["tags"] = tagsString
+        }
+        return result
+    }
+}
+
 public struct DBShotRequestParams {
     public let list: DBList?
     public let timeFrame: DBTimeFrame?
@@ -162,28 +190,16 @@ extension DBShot {
             parser: { _ in return true})
     }
     
-    static func updateShot(id:String, title:String? = nil,
-                           description:String? = nil, teamID:String? = nil,
-                           tags:[String]? = nil) -> Request<Bool> {
-        
-        let dirtyParams:[String:Any?] = ["title":title, "description":description, "team_id":teamID, "tags":tags]
-        let params = dirtyParams.reduce([String:Any](), { dict, pair in
-            guard let value = pair.value else { return dict }
-            var result = dict
-            result[pair.key] = value
-            return result
-        })
-        
+    static func updateShot(id:String, params:DBShotUpdateParams) -> Request<Bool> {
         return Request(type:.PUT,
                        path: "shots/\(id)",
             headers: Request<DBShot>.defaultHeaders,
-            params: params,
+            params: params.params,
             parser: { _ in return true})
     }
     
     static func popularShots(params:DBShotRequestParams? = nil, page:DBPage = DBPage()) ->
         Request<[DBShot]> {
-            
             var totalParams = page.params
             if let additional = params?.params {
                 totalParams.unionInPlace(dictionary: additional)
@@ -200,6 +216,21 @@ extension DBShot {
 }
 
 extension DBShot {
+    public static func getShot(id:String, callback:@escaping RequestCallback<DBShot>) {
+        RequestSender.defaultSender.send(request: DBShot.getShot(id: id),
+                                         callback: callback)
+    }
+    
+    public static func deleteShot(id:String, callback:@escaping RequestCallback<Bool>) {
+        RequestSender.defaultSender.send(request: DBShot.deleteShot(id: id),
+                                         callback: callback)
+    }
+    
+    public static func updateShot(id:String, params:DBShotUpdateParams, callback:@escaping RequestCallback<Bool>) {
+        RequestSender.defaultSender.send(request: DBShot.updateShot(id: id, params:params),
+                                         callback: callback)
+    }
+    
     public static func loadUserShots(userID id: String,
                                      page:DBPage = DBPage(),
                                      callback:@escaping RequestCallback<[DBShot]>) {
