@@ -37,7 +37,7 @@ extension DBBucket {
 
 //MARK: - Buscket requests
 extension DBBucket {
-    static func getBucketRequest(id id: String) -> Request<DBBucket> {
+    static func getBucketRequest(id: String) -> Request<DBBucket> {
         return Request(path: "buckets/\(id)",
             headers: Request<DBBucket>.defaultHeaders,
             parser: { data in
@@ -46,7 +46,7 @@ extension DBBucket {
         })
     }
     
-    static func createBucketRequest(name name: String, description:String?) -> Request<DBBucket> {
+    static func createBucketRequest(name: String, description:String?) -> Request<DBBucket> {
         return Request(type:.POST,
             path: "buckets",
             headers: Request<DBBucket>.defaultHeaders,
@@ -57,7 +57,7 @@ extension DBBucket {
         })
     }
     
-    static func updateBucketRequest(id id:String, name: String, description:String?) -> Request<DBBucket> {
+    static func updateBucketRequest(id:String, name: String, description:String?) -> Request<DBBucket> {
         return Request(type:.PUT,
                        path: "buckets/\(id)",
                        headers: Request<DBBucket>.defaultHeaders,
@@ -68,14 +68,14 @@ extension DBBucket {
         })
     }
     
-    static func deleteBucketRequest(id id:String) -> Request<Bool> {
+    static func deleteBucketRequest(id:String) -> Request<Bool> {
         return Request(type:.DELETE,
                        path: "buckets/\(id)",
             headers: Request<Bool>.defaultHeaders,
             parser: { _ in return true})
     }
     
-    static func getBucketShotsRequest(id id: String, page: UInt = 1, perPage: UInt = 100) -> Request<[DBShot]> {
+    static func getBucketShotsRequest(id: String, page: UInt = 1, perPage: UInt = 100) -> Request<[DBShot]> {
         return Request(path: "buckets/\(id)/shots",
             headers: Request<DBBucket>.defaultHeaders,
             params: ["page": "\(page)", "per_page": "\(perPage)"],
@@ -85,7 +85,7 @@ extension DBBucket {
         })
     }
     
-    static func addShotToBucketRequest(id id:String, shotID: String) -> Request<Bool> {
+    static func addShotToBucketRequest(id:String, shotID: String) -> Request<Bool> {
         return Request(type:.PUT,
                        path: "buckets/\(id)/shots",
             headers: Request<DBBucket>.defaultHeaders,
@@ -93,7 +93,7 @@ extension DBBucket {
             parser: {_ in return true})
     }
     
-    static func deleteShotFromBucketRequest(id id:String, shotID: String) -> Request<Bool> {
+    static func deleteShotFromBucketRequest(id:String, shotID: String) -> Request<Bool> {
         return Request(type:.DELETE,
                        path: "buckets/\(id)/shots",
             headers: Request<Bool>.defaultHeaders,

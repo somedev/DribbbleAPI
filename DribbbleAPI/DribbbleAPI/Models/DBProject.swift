@@ -37,7 +37,7 @@ extension DBProject {
 
 //MARK: - Project requests
 extension DBProject {
-    static func getProjectRequest(id id: String) -> Request<DBProject> {
+    static func getProjectRequest(id: String) -> Request<DBProject> {
         return Request(path: "projects/\(id)",
             headers: Request<DBProject>.defaultHeaders,
             parser: { data in
@@ -46,7 +46,7 @@ extension DBProject {
         })
     }
     
-    static func getProjectShotsRequest(id id: String, page: UInt = 1, perPage: UInt = 100) -> Request<[DBShot]> {
+    static func getProjectShotsRequest(id: String, page: UInt = 1, perPage: UInt = 100) -> Request<[DBShot]> {
         return Request(path: "projects/\(id)/shots",
             headers: Request<DBBucket>.defaultHeaders,
             params: ["page": "\(page)", "per_page": "\(perPage)"],
@@ -60,7 +60,7 @@ extension DBProject {
 
 //MARK: - operations with Project
 extension DBProject {
-    public static func loadProject(id id: String, callback:@escaping RequestCallback<DBProject>) {
+    public static func loadProject(id: String, callback:@escaping RequestCallback<DBProject>) {
         RequestSender.defaultSender.send(request: DBProject.getProjectRequest(id: id),
                                          callback: callback)
     }

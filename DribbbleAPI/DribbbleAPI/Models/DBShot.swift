@@ -213,7 +213,7 @@ extension DBShot {
                                          callback: callback)
     }
     
-    public static func loadPopularShots(params params:DBShotRequestParams? = nil,
+    public static func loadPopularShots(params:DBShotRequestParams? = nil,
                                         page:DBPage = DBPage(),
                                         callback:@escaping RequestCallback<[DBShot]>) {
         RequestSender.defaultSender.send(request: DBShot.popularShots(params:params, page:page),
