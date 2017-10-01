@@ -54,7 +54,7 @@ public final class DBKeychain {
             SecItemCopyMatching(query as CFDictionary, UnsafeMutablePointer($0))
         }
 
-        guard let data = result as? Data, resultCode == noErr, let finalResult = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as? String else {
+        guard let data = result as? Data, resultCode == noErr, let finalResult = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? else {
             return nil
         }
 

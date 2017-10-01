@@ -73,7 +73,7 @@ public final class DBLoginViewController: UIViewController, WKNavigationDelegate
     }
 
     // MARK: - private
-    func cancel() {
+    @objc func cancel() {
         dismiss(animated: true) {
             self.callback?(nil, false)
         }

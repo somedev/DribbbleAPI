@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         UINavigationBar.appearance(whenContainedInInstancesOf: [DBNavigationViewController.self]).tintColor = UIColor.white
-        UINavigationBar.appearance(whenContainedInInstancesOf: [DBNavigationViewController.self]).barTintColor = UIColor(colorLiteralRed: 0.2, green: 0.2, blue: 0.2, alpha: 1)
+        UINavigationBar.appearance(whenContainedInInstancesOf: [DBNavigationViewController.self]).barTintColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
         UINavigationBar.appearance(whenContainedInInstancesOf: [DBNavigationViewController.self]).isTranslucent = false
 
         updateButton(manager.isLoggedIn())
@@ -30,8 +30,8 @@ class ViewController: UIViewController {
     // MARK: - actions
     @IBAction func login(_ sender: AnyObject) {
         if manager.isLoggedIn() {
-            manager.logout(callback: { [weak self] result in
-                print("logout result: \(result)")
+            manager.logout(callback: { [weak self]  in
+                print("logout")
                 self?.updateButton(false)
             })
             return

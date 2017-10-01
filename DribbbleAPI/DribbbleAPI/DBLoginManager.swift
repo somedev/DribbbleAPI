@@ -102,7 +102,7 @@ public final class DBLoginManager {
             let filtered = records.filter({ $0.displayName.contains("dribbble") })
             WKWebsiteDataStore.default().removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
                 for: filtered,
-                completionHandler: callback ?? { _ in })
+                completionHandler: callback ?? {  })
         }
     }
 }
