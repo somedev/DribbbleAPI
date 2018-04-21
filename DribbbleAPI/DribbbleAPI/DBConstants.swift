@@ -13,6 +13,7 @@ internal let DBEmptyPageHTML = "<html><body bgcolor=\"#333333\"></body></html>"
 internal let DBTokenParameterName = "acess-token"
 
 // MARK: - API
+
 internal let DBAPIEndpoint = "https://api.dribbble.com/v1/"
 internal let DBAPIOAuthEndpoint = "https://dribbble.com/oauth/"
 

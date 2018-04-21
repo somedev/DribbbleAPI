@@ -15,16 +15,17 @@ public struct DBBucket {
     public let shotsCount: UInt
     public let created: Date
     public let updated: Date
-    public let user:DBUser?
+    public let user: DBUser?
 }
 
-//MARK: - custom initializer
+// MARK: - custom initializer
+
 extension DBBucket {
     public init?(dictionary: [String: Any] = [:]) {
         guard let id: String = dictionary.JSONValueForKey("id") else {
             return nil
         }
-        
+
         self.id = id
         name = dictionary.JSONValueForKey("name") ?? ""
         description = dictionary.JSONValueForKey("description") ?? ""
@@ -35,106 +36,108 @@ extension DBBucket {
     }
 }
 
-//MARK: - Buscket requests
+// MARK: - Buscket requests
+
 extension DBBucket {
     static func getBucketRequest(id: String) -> Request<DBBucket> {
         return Request(path: "buckets/\(id)",
-            headers: Request<DBBucket>.defaultHeaders,
-            parser: { data in
-                guard let dict = data as? [String: Any] else { return nil }
-                return DBBucket(dictionary: dict)
+                       headers: Request<DBBucket>.defaultHeaders,
+                       parser: { data in
+                           guard let dict = data as? [String: Any] else { return nil }
+                           return DBBucket(dictionary: dict)
         })
     }
-    
-    static func createBucketRequest(name: String, description:String?) -> Request<DBBucket> {
-        return Request(type:.POST,
-            path: "buckets",
-            headers: Request<DBBucket>.defaultHeaders,
-            params:["name":name, "description":description ?? ""],
-            parser: { data in
-                guard let dict = data as? [String: Any] else { return nil }
-                return DBBucket(dictionary: dict)
+
+    static func createBucketRequest(name: String, description: String?) -> Request<DBBucket> {
+        return Request(type: .POST,
+                       path: "buckets",
+                       headers: Request<DBBucket>.defaultHeaders,
+                       params: ["name": name, "description": description ?? ""],
+                       parser: { data in
+                           guard let dict = data as? [String: Any] else { return nil }
+                           return DBBucket(dictionary: dict)
         })
     }
-    
-    static func updateBucketRequest(id:String, name: String, description:String?) -> Request<DBBucket> {
-        return Request(type:.PUT,
+
+    static func updateBucketRequest(id: String, name: String, description: String?) -> Request<DBBucket> {
+        return Request(type: .PUT,
                        path: "buckets/\(id)",
                        headers: Request<DBBucket>.defaultHeaders,
-                       params:["name":name, "description":description ?? ""],
+                       params: ["name": name, "description": description ?? ""],
                        parser: { data in
-                        guard let dict = data as? [String: Any] else { return nil }
-                        return DBBucket(dictionary: dict)
+                           guard let dict = data as? [String: Any] else { return nil }
+                           return DBBucket(dictionary: dict)
         })
     }
-    
-    static func deleteBucketRequest(id:String) -> Request<Bool> {
-        return Request(type:.DELETE,
+
+    static func deleteBucketRequest(id: String) -> Request<Bool> {
+        return Request(type: .DELETE,
                        path: "buckets/\(id)",
-            headers: Request<Bool>.defaultHeaders,
-            parser: { _ in return true})
+                       headers: Request<Bool>.defaultHeaders,
+                       parser: { _ in true })
     }
-    
+
     static func getBucketShotsRequest(id: String, page: UInt = 1, perPage: UInt = 100) -> Request<[DBShot]> {
         return Request(path: "buckets/\(id)/shots",
-            headers: Request<DBBucket>.defaultHeaders,
-            params: ["page": "\(page)", "per_page": "\(perPage)"],
-            parser: { data in
-                guard let arr = data as? [[String: Any]] else { return nil }
-                return arr.flatMap({ DBShot(dictionary: $0) })
+                       headers: Request<DBBucket>.defaultHeaders,
+                       params: ["page": "\(page)", "per_page": "\(perPage)"],
+                       parser: { data in
+                           guard let arr = data as? [[String: Any]] else { return nil }
+                           return arr.flatMap({ DBShot(dictionary: $0) })
         })
     }
-    
-    static func addShotToBucketRequest(id:String, shotID: String) -> Request<Bool> {
-        return Request(type:.PUT,
+
+    static func addShotToBucketRequest(id: String, shotID: String) -> Request<Bool> {
+        return Request(type: .PUT,
                        path: "buckets/\(id)/shots",
-            headers: Request<DBBucket>.defaultHeaders,
-            params:["shot_id":shotID],
-            parser: {_ in return true})
+                       headers: Request<DBBucket>.defaultHeaders,
+                       params: ["shot_id": shotID],
+                       parser: { _ in true })
     }
-    
-    static func deleteShotFromBucketRequest(id:String, shotID: String) -> Request<Bool> {
-        return Request(type:.DELETE,
+
+    static func deleteShotFromBucketRequest(id: String, shotID: String) -> Request<Bool> {
+        return Request(type: .DELETE,
                        path: "buckets/\(id)/shots",
-            headers: Request<Bool>.defaultHeaders,
-            params:["shot_id":shotID],
-            parser: { _ in return true})
+                       headers: Request<Bool>.defaultHeaders,
+                       params: ["shot_id": shotID],
+                       parser: { _ in true })
     }
 }
 
-//MARK: - operations with Bucket
+// MARK: - operations with Bucket
+
 extension DBBucket {
-    public static func loadBucket(id anID: String, callback:@escaping RequestCallback<DBBucket>) {
+    public static func loadBucket(id anID: String, callback: @escaping RequestCallback<DBBucket>) {
         RequestSender.defaultSender.send(request: DBBucket.getBucketRequest(id: anID),
                                          callback: callback)
     }
-    
-    public static func createBucket(name:String, description:String? ,callback:@escaping RequestCallback<DBBucket>) {
+
+    public static func createBucket(name: String, description: String?, callback: @escaping RequestCallback<DBBucket>) {
         RequestSender.defaultSender.send(request: DBBucket.createBucketRequest(name: name, description: description),
                                          callback: callback)
     }
-    
-    public static func updateBucket(id:String, name:String, description:String? ,callback:@escaping RequestCallback<DBBucket>) {
+
+    public static func updateBucket(id: String, name: String, description: String?, callback: @escaping RequestCallback<DBBucket>) {
         RequestSender.defaultSender.send(request: DBBucket.updateBucketRequest(id: id, name: name, description: description),
                                          callback: callback)
     }
-    
-    public static func deleteBucket(id: String, callback:@escaping RequestCallback<Bool>) {
+
+    public static func deleteBucket(id: String, callback: @escaping RequestCallback<Bool>) {
         RequestSender.defaultSender.send(request: DBBucket.deleteBucketRequest(id: id),
                                          callback: callback)
     }
-    
-    public static func loadBucketShots(id anID: String, page: UInt = 1, perPage: UInt = 100, callback:@escaping RequestCallback<[DBShot]>) {
-        RequestSender.defaultSender.send(request: DBBucket.getBucketShotsRequest(id: anID, page:page, perPage:perPage),
+
+    public static func loadBucketShots(id anID: String, page: UInt = 1, perPage: UInt = 100, callback: @escaping RequestCallback<[DBShot]>) {
+        RequestSender.defaultSender.send(request: DBBucket.getBucketShotsRequest(id: anID, page: page, perPage: perPage),
                                          callback: callback)
     }
-    
-    public static func addShotToBucket(id: String, shotID:String, callback:@escaping RequestCallback<Bool>) {
+
+    public static func addShotToBucket(id: String, shotID: String, callback: @escaping RequestCallback<Bool>) {
         RequestSender.defaultSender.send(request: DBBucket.addShotToBucketRequest(id: id, shotID: shotID),
                                          callback: callback)
     }
-    
-    public static func deleteShotFromBucket(id: String, shotID:String, callback:@escaping RequestCallback<Bool>) {
+
+    public static func deleteShotFromBucket(id: String, shotID: String, callback: @escaping RequestCallback<Bool>) {
         RequestSender.defaultSender.send(request: DBBucket.deleteShotFromBucketRequest(id: id, shotID: shotID),
                                          callback: callback)
     }

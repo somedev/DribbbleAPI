@@ -12,22 +12,21 @@ enum RequestSenderError: Error {
     case NoData
     case InvalidData
     case ParserError
-    case InvalidStatusCode(code:Int)
+    case InvalidStatusCode(code: Int)
 }
 
-public typealias RequestCallback<T> = ((Result<T>) -> ())
+public typealias RequestCallback<T> = ((Result<T>) -> Void)
 
 public final class RequestSender {
-
     public static let defaultSender: RequestSender = {
-        return RequestSender(baseURL: URL(string: DBAPIEndpoint)!)
+        RequestSender(baseURL: URL(string: DBAPIEndpoint)!)
     }()
 
     private let baseURL: URL
     private let urlSession: URLSession = URLSession.shared
 
     public init(baseURL url: URL) {
-        self.baseURL = url
+        baseURL = url
     }
 
     public func send<T>(request r: Request<T>, callback: @escaping RequestCallback<T>) {
@@ -46,7 +45,7 @@ public final class RequestSender {
                 }
                 return
             }
-            
+
             guard let data = data else {
                 DispatchQueue.main.async {
                     callback(Result.Failure(RequestSenderError.NoData))
@@ -77,14 +76,13 @@ public final class RequestSender {
     }
 }
 
-
 public extension URLResponse {
-    public var isValidStatus:Bool {
+    public var isValidStatus: Bool {
         guard let response = self as? HTTPURLResponse else { return true }
         return response.statusCode >= 200 && response.statusCode < 300
     }
-    
-    public var status:Int {
+
+    public var status: Int {
         guard let response = self as? HTTPURLResponse else { return 200 }
         return response.statusCode
     }

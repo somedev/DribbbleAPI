@@ -29,7 +29,6 @@ public protocol JSONValueType {
 }
 
 public extension JSONValueType {
-
     public static func JSONValue(_ object: Any) -> T? {
         guard let objectValue = object as? T else {
             return nil
@@ -39,7 +38,6 @@ public extension JSONValueType {
 }
 
 extension String: JSONValueType {
-
     public static func JSONValue(_ object: Any) -> String? {
         guard let value = (object as AnyObject).description else { return nil }
         return value
@@ -47,7 +45,6 @@ extension String: JSONValueType {
 }
 
 extension Bool: JSONValueType {
-
     public static func JSONValue(_ object: Any) -> Bool? {
         guard let value = (object as AnyObject).boolValue else { return nil }
         return Bool(value)
@@ -55,7 +52,6 @@ extension Bool: JSONValueType {
 }
 
 extension Double: JSONValueType {
-
     public static func JSONValue(_ object: Any) -> Double? {
         guard let value = (object as AnyObject).doubleValue else { return nil }
         return Double(value)
@@ -63,7 +59,6 @@ extension Double: JSONValueType {
 }
 
 extension Float: JSONValueType {
-
     public static func JSONValue(_ object: Any) -> Float? {
         guard let value = (object as AnyObject).floatValue else { return nil }
         return Float(value)
@@ -71,7 +66,6 @@ extension Float: JSONValueType {
 }
 
 extension Int: JSONValueType {
-
     public static func JSONValue(_ object: Any) -> Int? {
         guard let value = (object as AnyObject).floatValue else { return nil }
         return Int(value)
@@ -79,7 +73,6 @@ extension Int: JSONValueType {
 }
 
 extension UInt: JSONValueType {
-
     public static func JSONValue(_ object: Any) -> UInt? {
         guard let value = (object as AnyObject).uintValue else { return nil }
         return UInt(value)
@@ -87,7 +80,6 @@ extension UInt: JSONValueType {
 }
 
 extension Date: JSONValueType {
-
     public static func JSONValue(_ object: Any) -> Date? {
         guard let value = (object as? String) else { return nil }
         return DateFormatter.dbFormatter.date(from: value)
@@ -95,7 +87,6 @@ extension Date: JSONValueType {
 }
 
 extension URL: JSONValueType {
-
     public static func JSONValue(_ object: Any) -> URL? {
         guard let urlString = object as? String,
             let objectValue = URL(string: urlString) else { return nil }
@@ -104,7 +95,6 @@ extension URL: JSONValueType {
 }
 
 public extension Dictionary where Key: JSONKeyType {
-
     private func anyForKey(_ key: Key) -> Any? {
         let pathComponents = key.stringValue.characters
             .split(separator: ".").map(String.init)
@@ -140,6 +130,6 @@ public extension Dictionary where Key: JSONKeyType {
             return nil
         }
         return any.flatMap({ element in
-            return A.JSONValue(element) as? A })
+            A.JSONValue(element) as? A })
     }
 }

@@ -9,11 +9,10 @@
 import Foundation
 import WebKit
 
-public typealias DBCallback = (() -> ())
-public typealias DBLoginCallback = ((Bool) -> ())
+public typealias DBCallback = (() -> Void)
+public typealias DBLoginCallback = ((Bool) -> Void)
 
 public final class DBLoginManager {
-
     private let sender = RequestSender(baseURL: URL(string: DBAPIOAuthEndpoint)!)
     private let clientID: String
     private let clientSecret: String
@@ -32,8 +31,8 @@ public final class DBLoginManager {
         let job: DBCallback = { [weak self] in
             guard let manager = self else { return }
             let controller = DBLoginViewController(callback: manager.controllerCallback(callback: callback),
-                loadURL: manager.makeAuthorizeURL(),
-                callbackURL: manager.callbackURL)
+                                                   loadURL: manager.makeAuthorizeURL(),
+                                                   callbackURL: manager.callbackURL)
             let navigation = DBNavigationViewController(rootViewController: controller)
             viewController.present(navigation, animated: true, completion: nil)
         }
@@ -52,6 +51,7 @@ public final class DBLoginManager {
     }
 
     // MARK: - private
+
     private func controllerCallback(callback aCallback: @escaping DBLoginCallback) -> DBLoginViewControllerCallback {
         return { [weak self] code, success in
             guard let code = code, success == true else {
@@ -65,10 +65,10 @@ public final class DBLoginManager {
     private func getAccessTokenFrom(code aCode: String, callback: @escaping DBLoginCallback) {
         sender.send(request: accessTokenRequestFrom(code: aCode)) { result in
             switch result {
-            case .Success(let token):
+            case let .Success(token):
                 DBTokenStorage.shared.setToken(token: token)
                 callback(true)
-            case .Failure(let error):
+            case let .Failure(error):
                 print("access token fetch error: \(error)")
                 callback(false)
             }
@@ -87,12 +87,12 @@ public final class DBLoginManager {
 
     private func accessTokenRequestFrom(code aCode: String) -> Request<String> {
         return Request(type: .POST,
-            path: DBAPITokenPath,
-            headers: [:],
-            params: ["client_id": clientID, "client_secret": clientSecret, "code": aCode],
-            parser: { data in
-                guard let dict = data as? [String: Any] else { return nil }
-                return dict["access_token"] as? String
+                       path: DBAPITokenPath,
+                       headers: [:],
+                       params: ["client_id": clientID, "client_secret": clientSecret, "code": aCode],
+                       parser: { data in
+                           guard let dict = data as? [String: Any] else { return nil }
+                           return dict["access_token"] as? String
         })
     }
 
@@ -101,8 +101,8 @@ public final class DBLoginManager {
         store.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
             let filtered = records.filter({ $0.displayName.contains("dribbble") })
             WKWebsiteDataStore.default().removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
-                for: filtered,
-                completionHandler: callback ?? {  })
+                                                    for: filtered,
+                                                    completionHandler: callback ?? {})
         }
     }
 }

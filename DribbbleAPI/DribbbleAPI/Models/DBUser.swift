@@ -16,7 +16,7 @@ public struct DBUser {
     public let avatarUrl: URL?
     public let bio: String
     public let location: String
-    public let links:[DBLink]?
+    public let links: [DBLink]?
     public let bucketsCount: UInt
     public let commentsReceivedCount: UInt
     public let followersCount: UInt
@@ -35,7 +35,6 @@ public struct DBUser {
 }
 
 extension DBUser {
-
     public init?(dictionary: [String: Any] = [:]) {
         guard let id: String = dictionary.JSONValueForKey("id") else {
             return nil
@@ -63,7 +62,7 @@ extension DBUser {
         isPro = dictionary.JSONValueForKey("pro") ?? false
         created = dictionary.JSONValueForKey("created_at") ?? Date()
         updated = dictionary.JSONValueForKey("updated_at") ?? Date()
-        if let linksDict = dictionary["links"] as? [String:String] {
+        if let linksDict = dictionary["links"] as? [String: String] {
             links = DBLink.links(from: linksDict)
         } else {
             links = nil
@@ -74,39 +73,38 @@ extension DBUser {
 extension DBUser {
     static var currentUserRequest: Request<DBUser> {
         return Request(path: "user",
-            headers: Request<DBUser>.defaultHeaders,
-            parser: { data in
-                guard let dict = data as? [String: Any] else { return nil }
-                return DBUser(dictionary: dict)
+                       headers: Request<DBUser>.defaultHeaders,
+                       parser: { data in
+                           guard let dict = data as? [String: Any] else { return nil }
+                           return DBUser(dictionary: dict)
         })
     }
 
     static func userRequest(id anID: String) -> Request<DBUser> {
         return Request(path: "users/\(anID)",
-            headers: Request<DBUser>.defaultHeaders,
-            parser: { data in
-                guard let dict = data as? [String: Any] else { return nil }
-                return DBUser(dictionary: dict)
+                       headers: Request<DBUser>.defaultHeaders,
+                       parser: { data in
+                           guard let dict = data as? [String: Any] else { return nil }
+                           return DBUser(dictionary: dict)
         })
     }
 }
 
 extension DBUser: JSONValueType {
     public static func JSONValue(_ object: Any) -> DBUser? {
-        guard let userDict = object as? [String:Any],
-            let user = DBUser(dictionary:userDict) else { return nil }
+        guard let userDict = object as? [String: Any],
+            let user = DBUser(dictionary: userDict) else { return nil }
         return user
     }
 }
 
-
 extension DBUser {
-    public static func loadUser(id anID: String, callback:@escaping RequestCallback<DBUser>) {
+    public static func loadUser(id anID: String, callback: @escaping RequestCallback<DBUser>) {
         RequestSender.defaultSender.send(request: DBUser.userRequest(id: anID),
                                          callback: callback)
     }
-    
-    public static func loadCurrentUser(_ callback:@escaping RequestCallback<DBUser>) {
+
+    public static func loadCurrentUser(_ callback: @escaping RequestCallback<DBUser>) {
         RequestSender.defaultSender.send(request: DBUser.currentUserRequest,
                                          callback: callback)
     }

@@ -9,7 +9,6 @@
 import Foundation
 
 internal final class DBTokenStorage {
-
     private let keychain: DBKeychain = DBKeychain()
     private var tokenKey: String = DBTokenParameterName
 
@@ -22,7 +21,7 @@ internal final class DBTokenStorage {
     }
 
     public func getToken() -> String? {
-        if (tokenCache != nil) {
+        if tokenCache != nil {
             return tokenCache
         }
         tokenCache = keychain.getString(forKey: tokenKey)
@@ -31,11 +30,11 @@ internal final class DBTokenStorage {
 
     public func setToken(token value: String) {
         tokenCache = value
-        let _ = keychain.set(string: value, forKey: tokenKey)
+        _ = keychain.set(string: value, forKey: tokenKey)
     }
 
     public func deleteToken() {
         tokenCache = nil
-        let _ = keychain.delete(forKey: tokenKey)
+        _ = keychain.delete(forKey: tokenKey)
     }
 }

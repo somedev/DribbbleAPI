@@ -16,7 +16,7 @@ public struct DBTeam {
     public let avatarUrl: URL?
     public let bio: String
     public let location: String
-    public let links:[DBLink]?
+    public let links: [DBLink]?
     public let bucketsCount: UInt
     public let commentsReceivedCount: UInt
     public let followersCount: UInt
@@ -33,14 +33,14 @@ public struct DBTeam {
     public let updated: Date
 }
 
-//MARK: - custom initializer
+// MARK: - custom initializer
+
 extension DBTeam {
-    
     public init?(dictionary: [String: Any] = [:]) {
         guard let id: String = dictionary.JSONValueForKey("id") else {
             return nil
         }
-        
+
         self.id = id
         name = dictionary.JSONValueForKey("name") ?? ""
         username = dictionary.JSONValueForKey("username") ?? ""
@@ -62,7 +62,7 @@ extension DBTeam {
         isPro = dictionary.JSONValueForKey("pro") ?? false
         created = dictionary.JSONValueForKey("created_at") ?? Date()
         updated = dictionary.JSONValueForKey("updated_at") ?? Date()
-        if let linksDict = dictionary["links"] as? [String:String] {
+        if let linksDict = dictionary["links"] as? [String: String] {
             links = DBLink.links(from: linksDict)
         } else {
             links = nil
@@ -70,11 +70,12 @@ extension DBTeam {
     }
 }
 
-//MARK: - JSONValueType
+// MARK: - JSONValueType
+
 extension DBTeam: JSONValueType {
     public static func JSONValue(_ object: Any) -> DBTeam? {
-        guard let dict = object as? [String:Any],
-            let team = DBTeam(dictionary:dict) else { return nil }
+        guard let dict = object as? [String: Any],
+            let team = DBTeam(dictionary: dict) else { return nil }
         return team
     }
 }

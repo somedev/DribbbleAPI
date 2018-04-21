@@ -17,7 +17,7 @@ public final class DBKeychain {
             return false
         }
 
-        let _ = delete(forKey: key)
+        _ = delete(forKey: key)
 
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
@@ -40,7 +40,6 @@ public final class DBKeychain {
     }
 
     public func getString(forKey key: String) -> String? {
-
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: keyWithPrefix(key: key),
@@ -62,6 +61,7 @@ public final class DBKeychain {
     }
 
     // MARK: - private
+
     private func keyWithPrefix(key aKey: String) -> String {
         return "\(keyPrefix)\(aKey)"
     }

@@ -9,10 +9,9 @@
 import UIKit
 import WebKit
 
-public typealias DBLoginViewControllerCallback = ((String?, Bool) -> ())
+public typealias DBLoginViewControllerCallback = ((String?, Bool) -> Void)
 
 public final class DBLoginViewController: UIViewController, WKNavigationDelegate {
-
     private var webView: WKWebView?
     private var callback: DBLoginViewControllerCallback?
     private var loadURL: URL?
@@ -20,7 +19,7 @@ public final class DBLoginViewController: UIViewController, WKNavigationDelegate
 
     public init(callback aCallback: @escaping DBLoginViewControllerCallback, loadURL: URL?, callbackURL: URL) {
         super.init(nibName: nil, bundle: nil)
-        self.callback = aCallback
+        callback = aCallback
         self.loadURL = loadURL
         self.callbackURL = callbackURL
     }
@@ -38,9 +37,9 @@ public final class DBLoginViewController: UIViewController, WKNavigationDelegate
     public override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel",
-            style: .done,
-            target: self,
-            action: #selector(DBLoginViewController.cancel))
+                                                           style: .done,
+                                                           target: self,
+                                                           action: #selector(DBLoginViewController.cancel))
         guard let webView = webView, let loadURL = self.loadURL else {
             callback?(nil, false)
             return
@@ -53,14 +52,14 @@ public final class DBLoginViewController: UIViewController, WKNavigationDelegate
     }
 
     // MARK: - WKNavigationDelegate
-    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping(WKNavigationActionPolicy) -> Swift.Void) {
 
+    public func webView(_: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Swift.Void) {
         guard let url = navigationAction.request.url else {
             decisionHandler(.allow)
             return
         }
 
-        if (url.host == callbackURL?.host) {
+        if url.host == callbackURL?.host {
             decisionHandler(.cancel)
             loadEmptyHtml()
             guard let query = URLComponents(string: url.absoluteString)?.queryItems?.first,
@@ -73,6 +72,7 @@ public final class DBLoginViewController: UIViewController, WKNavigationDelegate
     }
 
     // MARK: - private
+
     @objc func cancel() {
         dismiss(animated: true) {
             self.callback?(nil, false)
@@ -80,7 +80,7 @@ public final class DBLoginViewController: UIViewController, WKNavigationDelegate
     }
 
     private func loadEmptyHtml() {
-        let _ = webView?.loadHTMLString(DBEmptyPageHTML, baseURL: nil)
+        _ = webView?.loadHTMLString(DBEmptyPageHTML, baseURL: nil)
     }
 
     private func proceedWith(code aCode: String) {

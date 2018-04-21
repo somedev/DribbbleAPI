@@ -9,7 +9,6 @@
 import Foundation
 
 extension String {
-
     public static func requestStringFrom(dictionary dic: [String: Any]) -> String {
         var params: [String] = []
         for (k, v) in dic {
