@@ -83,7 +83,7 @@ extension DBBucket {
                        params: ["page": "\(page)", "per_page": "\(perPage)"],
                        parser: { data in
                            guard let arr = data as? [[String: Any]] else { return nil }
-                           return arr.flatMap({ DBShot(dictionary: $0) })
+            return arr.compactMap({ DBShot(dictionary: $0) })
         })
     }
 

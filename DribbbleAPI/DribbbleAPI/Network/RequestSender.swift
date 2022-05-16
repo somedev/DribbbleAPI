@@ -77,12 +77,12 @@ public final class RequestSender {
 }
 
 public extension URLResponse {
-    public var isValidStatus: Bool {
+    var isValidStatus: Bool {
         guard let response = self as? HTTPURLResponse else { return true }
         return response.statusCode >= 200 && response.statusCode < 300
     }
 
-    public var status: Int {
+    var status: Int {
         guard let response = self as? HTTPURLResponse else { return 200 }
         return response.statusCode
     }

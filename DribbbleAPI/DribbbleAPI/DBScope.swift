@@ -16,7 +16,7 @@ public enum DBScope: String {
 
     static func scopeString(from scopes: [DBScope]) -> String {
         var result = scopes.reduce("", { "\($0)+\($1.rawValue)" })
-        result.characters.removeFirst(1)
+        result.removeFirst(1)
         return result
     }
 }

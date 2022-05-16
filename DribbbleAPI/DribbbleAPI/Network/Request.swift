@@ -39,19 +39,19 @@ public struct Request<T> {
 }
 
 public extension Request {
-    public static var defaultHeaders: [String: String] {
+    static var defaultHeaders: [String: String] {
         guard let token = DBTokenStorage.shared.getToken() else {
             return [:]
         }
         return ["Authorization": "Bearer \(token)"]
     }
 
-    public func requestWith(baseURL anUrl: URL) -> URLRequest {
+    func requestWith(baseURL anUrl: URL) -> URLRequest {
         var url = anUrl.appendingPathComponent(path)
         var request = URLRequest(url: url)
         if let params = self.params {
             let data = String.requestStringFrom(dictionary: params)
-            if data.characters.count > 0 && type == .GET {
+            if data.count > 0 && type == .GET {
                 url = url.appendingPathComponent("?\(data)")
             } else {
                 request.httpBody = data.data(using: .utf8)

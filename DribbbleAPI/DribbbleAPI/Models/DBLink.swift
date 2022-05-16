@@ -23,6 +23,6 @@ extension DBLink {
     }
 
     public static func links(from dictionary: [String: String]) -> [DBLink]? {
-        return dictionary.flatMap({ DBLink(key: $0, value: $1) })
+        return dictionary.compactMap({ DBLink(key: $0, value: $1) })
     }
 }

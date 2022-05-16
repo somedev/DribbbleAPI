@@ -29,7 +29,7 @@ public protocol JSONValueType {
 }
 
 public extension JSONValueType {
-    public static func JSONValue(_ object: Any) -> T? {
+    static func JSONValue(_ object: Any) -> T? {
         guard let objectValue = object as? T else {
             return nil
         }
@@ -96,8 +96,7 @@ extension URL: JSONValueType {
 
 public extension Dictionary where Key: JSONKeyType {
     private func anyForKey(_ key: Key) -> Any? {
-        let pathComponents = key.stringValue.characters
-            .split(separator: ".").map(String.init)
+        let pathComponents = key.stringValue.split(separator: ".")
         var accumulator: Any = self
 
         for component in pathComponents {
@@ -113,7 +112,7 @@ public extension Dictionary where Key: JSONKeyType {
         return accumulator
     }
 
-    public func JSONValueForKey<A: JSONValueType>(_ key: Key) -> A? {
+    func JSONValueForKey<A: JSONValueType>(_ key: Key) -> A? {
         guard let any = anyForKey(key), let result = A.JSONValue(any) as? A else {
             return nil
         }
@@ -125,11 +124,11 @@ public extension Dictionary where Key: JSONKeyType {
         return result
     }
 
-    public func JSONValueForKey<A: JSONValueType>(_ key: Key) -> [A]? {
+    func JSONValueForKey<A: JSONValueType>(_ key: Key) -> [A]? {
         guard let any = anyForKey(key) as? Array<AnyObject> else {
             return nil
         }
-        return any.flatMap({ element in
+        return any.compactMap({ element in
             A.JSONValue(element) as? A })
     }
 }

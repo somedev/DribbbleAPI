@@ -35,7 +35,7 @@ public struct DBShotUpdateParams {
     public let description: String?
     public let teamID: String?
     public let tags: [String]?
-
+    
     public var params: [String: Any] {
         var result: [String: Any] = [:]
         if let title = self.title {
@@ -51,7 +51,7 @@ public struct DBShotUpdateParams {
             let tagsString: String = tags.reduce("", { acc, value in
                 acc + "," + value
             })
-
+            
             result["tags"] = tagsString
         }
         return result
@@ -63,13 +63,13 @@ public struct DBShotRequestParams {
     public let timeFrame: DBTimeFrame?
     public let date: Date?
     public let sort: DBSort?
-
+    
     private static var dateFormatter: DateFormatter = {
         var formatter = DateFormatter()
         formatter.dateFormat = "YYYY-MM-DD"
         return formatter
     }()
-
+    
     public init(list: DBList? = nil, timeFrame: DBTimeFrame? = nil,
                 date: Date? = nil, sort: DBSort? = nil) {
         self.list = list
@@ -77,7 +77,7 @@ public struct DBShotRequestParams {
         self.date = date
         self.sort = sort
     }
-
+    
     public var params: [String: Any] {
         var result: [String: Any] = [:]
         if let list = self.list {
@@ -125,7 +125,7 @@ extension DBShot {
         guard let id: String = dictionary.JSONValueForKey("id") else {
             return nil
         }
-
+        
         self.id = id
         title = dictionary.JSONValueForKey("title") ?? ""
         description = dictionary.JSONValueForKey("description") ?? ""
@@ -156,37 +156,37 @@ extension DBShot {
                        headers: Request<DBShot>.defaultHeaders,
                        params: page.params,
                        parser: { data in
-                           guard let arr = data as? [[String: Any]] else { return nil }
-                           return arr.flatMap({ DBShot(dictionary: $0) })
+            guard let arr = data as? [[String: Any]] else { return nil }
+            return arr.compactMap({ DBShot(dictionary: $0) })
         })
     }
-
+    
     static func userShots(id: String, page: DBPage = DBPage()) -> Request<[DBShot]> {
         return Request(path: "user/\(id)/shots",
                        headers: Request<DBShot>.defaultHeaders,
                        params: page.params,
                        parser: { data in
-                           guard let arr = data as? [[String: Any]] else { return nil }
-                           return arr.flatMap({ DBShot(dictionary: $0) })
+            guard let arr = data as? [[String: Any]] else { return nil }
+            return arr.compactMap({ DBShot(dictionary: $0) })
         })
     }
-
+    
     static func getShot(id: String) -> Request<DBShot> {
         return Request(path: "shots/\(id)",
                        headers: Request<DBShot>.defaultHeaders,
                        parser: { data in
-                           guard let data = data as? [String: Any] else { return nil }
-                           return DBShot(dictionary: data)
+            guard let data = data as? [String: Any] else { return nil }
+            return DBShot(dictionary: data)
         })
     }
-
+    
     static func deleteShot(id: String) -> Request<Bool> {
         return Request(type: .DELETE,
                        path: "shots/\(id)",
                        headers: Request<DBShot>.defaultHeaders,
                        parser: { _ in true })
     }
-
+    
     static func updateShot(id: String, params: DBShotUpdateParams) -> Request<Bool> {
         return Request(type: .PUT,
                        path: "shots/\(id)",
@@ -194,20 +194,20 @@ extension DBShot {
                        params: params.params,
                        parser: { _ in true })
     }
-
+    
     static func popularShots(params: DBShotRequestParams? = nil, page: DBPage = DBPage()) ->
-        Request<[DBShot]> {
+    Request<[DBShot]> {
         var totalParams = page.params
         if let additional = params?.params {
             totalParams.unionInPlace(dictionary: additional)
         }
-
+        
         return Request(path: "shots",
                        headers: Request<DBShot>.defaultHeaders,
                        params: totalParams,
                        parser: { data in
-                           guard let arr = data as? [[String: Any]] else { return nil }
-                           return arr.flatMap({ DBShot(dictionary: $0) })
+            guard let arr = data as? [[String: Any]] else { return nil }
+            return arr.compactMap({ DBShot(dictionary: $0) })
         })
     }
 }
@@ -217,30 +217,30 @@ extension DBShot {
         RequestSender.defaultSender.send(request: DBShot.getShot(id: id),
                                          callback: callback)
     }
-
+    
     public static func deleteShot(id: String, callback: @escaping RequestCallback<Bool>) {
         RequestSender.defaultSender.send(request: DBShot.deleteShot(id: id),
                                          callback: callback)
     }
-
+    
     public static func updateShot(id: String, params: DBShotUpdateParams, callback: @escaping RequestCallback<Bool>) {
         RequestSender.defaultSender.send(request: DBShot.updateShot(id: id, params: params),
                                          callback: callback)
     }
-
+    
     public static func loadUserShots(userID id: String,
                                      page: DBPage = DBPage(),
                                      callback: @escaping RequestCallback<[DBShot]>) {
         RequestSender.defaultSender.send(request: DBShot.userShots(id: id, page: page),
                                          callback: callback)
     }
-
+    
     public static func loadCurrentUserShots(page: DBPage = DBPage(),
                                             callback: @escaping RequestCallback<[DBShot]>) {
         RequestSender.defaultSender.send(request: DBShot.currentUserShots(page: page),
                                          callback: callback)
     }
-
+    
     public static func loadPopularShots(params: DBShotRequestParams? = nil,
                                         page: DBPage = DBPage(),
                                         callback: @escaping RequestCallback<[DBShot]>) {
